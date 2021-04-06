@@ -14,5 +14,8 @@ def insert():
 def delete():
     return render_template("deletion.html")  
           
+@app.route("/adt")
+def adt():
+    return render_template("adt.html") 
 if __name__ == "__main__":
     app.run(debug=True)
