@@ -16,6 +16,11 @@ def delete():
           
 @app.route("/adt")
 def adt():
-    return render_template("adt.html") 
+    return render_template("adt.html")
+
+@app.route("/visualization")
+def visualization():
+    return render_template("visualization.html") 
+
 if __name__ == "__main__":
     app.run(debug=True)

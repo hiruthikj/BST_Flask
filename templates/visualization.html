@@ -23,9 +23,26 @@
 
     <body>
 
-        {% include "home.html" %}
+        {% include "navbar.html" %}
         {% block content %}
+        <br>
+        <div class="container-lg">
+        <br>
+        <form class="form-inline">
+            <div class="form-group mx-sm-3 mb-2">
+              <input style="width: 10%;" type="text" class="form-control" id="insertelement">
+              <button style="width: 10%" type="submit" class="btn btn-secondary mb-2">Insert</button>
 
+              <br><br>
+              <input style="width: 10%;" type="text" class="form-control" id="searchelement">
+              <button style="width: 10%" type="submit" class="btn btn-secondary mb-2">Search</button>
+              
+              <br><br>
+              <input style="width: 10%;" type="text" class="form-control" id="deleteelement">
+              <button style="width: 10%" type="submit" class="btn btn-secondary mb-2">Delete</button>
+            </div>
+        </form>
+        </div>
         {% endblock %}
     </body>
 
