@@ -197,25 +197,6 @@ class BST:
             del self.label_dict[node.value]
             del node
             
-        else:
-#            while t < 2:
-#                rate(1 / dt)
-#                node.pos += v * dt
-#                self.label_dict[node.value][0].pos = node.pos
-#                t += dt
-            
-            in_arr = []
-            for i in self.node_list:
-                in_arr.append(i.value)
-            in_arr.sort()
-            print(in_arr)
-            x = in_arr.index(value)+1
-            
-            
-            self.remove_item(in_arr[x])        
-            node.value = in_arr[x]
-            
-            
     
         self.refactor()
         return to_return
@@ -425,7 +406,8 @@ def main():
                 print(f"{node.value} found!!")
         elif inputs[0] == "I":
             val = int(inputs[1])
-            while val in bst.label_dict.keys():
+            node_list_vals = [ node.value for node in bst.node_list ]
+            while val in node_list_vals:
                 get_input("Enter a value not present in the tree: ")
                 wait_for_input()
                 val = int(inp_str)
