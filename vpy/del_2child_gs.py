@@ -36,7 +36,6 @@ class BST:
                 parent=None
             )
             self.node_list.append(new_node)
-#issue
 
             self.label_dict[value] = (
                 label(
@@ -196,7 +195,17 @@ class BST:
             to_return = node
             del self.label_dict[node.value]
             del node
+
+        else:
+            next_inorder_value = self.get_next_inorder(node).value
+            to_return = self.remove_item(next_inorder_value)
+
+            self.get_label(node).text = next_inorder_value
+            self.label_dict[next_inorder_value] = self.label_dict[node.value]
+            del self.label_dict[node.value]
             
+            node.value = next_inorder_value
+
     
         self.refactor()
         return to_return
@@ -322,6 +331,13 @@ class BST:
             self.inorderTraverse(curnode.right)
         return
 
+    def get_next_inorder(self,node):
+        curr_node = node.right
+        while curr_node.left:
+            curr_node = curr_node.left
+
+        return curr_node
+
     def add_items(self, *args):
         for value in args:
             self.add_item(value)
@@ -420,7 +436,7 @@ def main():
             if node is None:
                 print(f"{val} is not present")
             else:
-                print(f"{node.value} deleted")
+                print(f"{val} deleted")
             print()
 
         elif inputs[0] == "X":
