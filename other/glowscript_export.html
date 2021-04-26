@@ -1,0 +1,906 @@
+<div id="glowscript" class="glowscript">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link type="text/css" href="https://www.glowscript.org/css/redmond/2.1/jquery-ui.custom.css" rel="stylesheet" />
+    <link type="text/css" href="https://www.glowscript.org/css/ide.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://www.glowscript.org/lib/jquery/2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.glowscript.org/lib/jquery/2.1/jquery-ui.custom.min.js"></script>
+    <script type="text/javascript" src="https://www.glowscript.org/package/glow.3.1.min.js"></script>
+    <script type="text/javascript" src="https://www.glowscript.org/package/RSrun.3.1.min.js"></script>
+    <script type="text/javascript"><!--//--><![CDATA[//><!--
+    
+    // START JAVASCRIPT
+    ;(function() {;
+    var ρσ_modules = {};
+    var inp_str, win;
+    ρσ_modules.pythonize = {};
+    
+    (function(){
+        function strings() {
+            var string_funcs, exclude, name;
+            string_funcs = set("capitalize strip lstrip rstrip islower isupper isspace lower upper swapcase center count endswith startswith find rfind index rindex format join ljust rjust partition rpartition replace split rsplit splitlines zfill".split(" "));
+            if (!arguments.length) {
+                exclude = (function(){
+                    var s = ρσ_set();
+                    s.jsset.add("split");
+                    s.jsset.add("replace");
+                    return s;
+                })();
+            } else if (arguments[0]) {
+                exclude = Array.prototype.slice.call(arguments);
+            } else {
+                exclude = null;
+            }
+            if (exclude) {
+                string_funcs = string_funcs.difference(set(exclude));
+            }
+            var ρσ_Iter0 = string_funcs;
+            ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
+            for (var ρσ_Index0 of ρσ_Iter0) {
+                name = ρσ_Index0;
+                (ρσ_expr_temp = String.prototype)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] = (ρσ_expr_temp = ρσ_str.prototype)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
+            }
+        };
+        if (!strings.__module__) Object.defineProperties(strings, {
+            __module__ : {value: "pythonize"}
+        });
+    
+        ρσ_modules.pythonize.strings = strings;
+    })();
+    async function __main__() {
+    "use strict";
+    
+        var version, display, vector, print, arange, __name__, type, scene, ρσ_ls, inp_str, win;
+        version = ρσ_list_decorate([ "3.1", "glowscript" ]);
+        Array.prototype['+'] = function(r) {return this.concat(r)}
+        Array.prototype['*'] = function(r) {return __array_times_number(this, r)}
+        window.__GSlang = "vpython";
+        display = canvas;
+        vector = vec;
+        print = GSprint;
+        arange = range;
+        __name__ = "__main__";
+        type = pytype;
+        scene = canvas();
+        var strings = ρσ_modules.pythonize.strings;
+    
+        strings();
+        "8";
+        function BST() {;
+        }
+        BST.prototype.__init__ = async function __init__() {
+            var self = this;
+            "10";
+            self.root = null;
+            "11";
+            self.label_dict = {};
+            "12";
+            self.node_list = ρσ_list_decorate([]);
+            "14";
+            self.level_breadth = 5;
+            "15";
+            self.level_hgt = 5;
+            "16";
+            self.radius = 2;
+            "18";
+            self.font_size = 15;
+            "20";
+            scene.background = color.white;
+            "21";
+            scene.autoscale = true;
+            "23";
+            scene.width = 1280;
+            "24";
+            scene.height = 620;
+            "26";
+            print("BST initialted");
+        };
+        if (!BST.prototype.__init__.__module__) Object.defineProperties(BST.prototype.__init__, {
+            __module__ : {value: null}
+        });
+        BST.__argnames__ = BST.prototype.__init__.__argnames__;
+        BST.__handles_kwarg_interpolation__ = BST.prototype.__init__.__handles_kwarg_interpolation__;
+        BST.prototype.add_item = async function add_item(value) {
+            var self = this;
+            var ρσ_ls, new_node, pointer, parent, insert_left;
+            "29";
+            (await rate(1.5));
+            "30";
+            if (self.root === null) {
+                "31";
+                new_node = ρσ_interpolate_kwargs.call(this, sphere, [ρσ_desugar_kwargs({pos: vector(0, 0, 0), radius: self.radius, color: color.cyan, value: value, left: null, right: null, parent: null})]);
+                "40";
+                self.node_list.append(new_node);
+                "43";
+                (ρσ_expr_temp = self.label_dict)[(typeof value === "number" && value["<"](0)) ? ρσ_expr_temp.length["+"](value) : value] = [ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: new_node.pos, text: value, color: color.black, height: self.font_size})]), 
+                null];
+                "50";
+                self.root = new_node;
+                "51";
+                return self.root;
+            }
+            "53";
+            pointer = self.root;
+            "54";
+            parent = null;
+            "55";
+            insert_left = null;
+            "57";
+            while (pointer) {
+                "58";
+                parent = pointer;
+                "59";
+                if (value["<"](pointer.value)) {
+                    "60";
+                    pointer = pointer.left;
+                    "61";
+                    insert_left = true;
+                    "62";
+                } else if (value[">"](pointer.value)) {
+                    "63";
+                    pointer = pointer.right;
+                    "64";
+                    insert_left = false;
+                    "66";
+                }
+            }
+            if (insert_left) {
+                "67";
+                new_node = ρσ_interpolate_kwargs.call(this, sphere, [ρσ_desugar_kwargs({pos: parent.pos["+"](vector(self.level_breadth["-u"](), self.level_hgt["-u"](), 0)), radius: self.radius, color: color.cyan, value: value, left: null, right: null, parent: parent})]);
+                "76";
+                self.node_list.append(new_node);
+                "77";
+                parent.left = new_node;
+                "78";
+            } else {
+                "79";
+                new_node = ρσ_interpolate_kwargs.call(this, sphere, [ρσ_desugar_kwargs({pos: parent.pos["+"](vector(self.level_breadth, self.level_hgt["-u"](), 0)), radius: self.radius, color: color.cyan, value: value, left: null, right: null, parent: parent})]);
+                "88";
+                self.node_list.append(new_node);
+                "89";
+                parent.right = new_node;
+            }
+            "91";
+            (ρσ_expr_temp = self.label_dict)[(typeof value === "number" && value["<"](0)) ? ρσ_expr_temp.length["+"](value) : value] = ρσ_list_decorate([ ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: new_node.pos, text: value, color: color.black, height: self.font_size})]), ρσ_interpolate_kwargs.call(this, arrow, [ρσ_desugar_kwargs({pos: parent.pos, axis: new_node.pos["-"](parent.pos), color: color.yellow})]) ]);
+            "98";
+            (await self.refactor());
+        };
+        if (!BST.prototype.add_item.__argnames__) Object.defineProperties(BST.prototype.add_item, {
+            __argnames__ : {value: ["value"]},
+            __module__ : {value: null}
+        });
+        BST.prototype.search_item = async function search_item(node, value) {
+            var self = this;
+            "101";
+            if (node === null) {
+                "102";
+                return null;
+            }
+            "104";
+            node.color = color.magenta;
+            "105";
+            if ((await self.get_arrow(node))) {
+                "106";
+                (await self.get_arrow(node)).color = color.magenta;
+            }
+            "107";
+            (await sleep(1));
+            "108";
+            node.color = color.cyan;
+            "109";
+            if ((await self.get_arrow(node))) {
+                "110";
+                (await self.get_arrow(node)).color = color.yellow;
+                "112";
+            }
+            if ((node.value === value || typeof node.value === "object" && ρσ_equals(node.value, value))) {
+                "113";
+                node.color = color.green;
+                "114";
+                (await sleep(2));
+                "115";
+                node.color = color.cyan;
+                "117";
+                return node;
+                "119";
+            } else if (value["<"](node.value)) {
+                "120";
+                return (await self.search_item(node.left, value));
+                "121";
+            } else if (value[">"](node.value)) {
+                "122";
+                return (await self.search_item(node.right, value));
+            }
+        };
+        if (!BST.prototype.search_item.__argnames__) Object.defineProperties(BST.prototype.search_item, {
+            __argnames__ : {value: ["node", "value"]},
+            __module__ : {value: null}
+        });
+        BST.prototype.remove_item = async function remove_item(value) {
+            var self = this;
+            var ρσ_ls, node, v, dt, t, to_return;
+            "125";
+            node = (await self.search_item(self.root, value));
+            "126";
+            if (node === null) {
+                "128";
+                return null;
+            }
+            "130";
+            node.color = color.red;
+            "132";
+            v = vector(0, 0, 5);
+            "133";
+            dt = .05;
+            "134";
+            t = 0;
+            "136";
+            if ((await self.is_leaf(node))) {
+                "137";
+                while (t["<"](3)) {
+                    "138";
+                    (await rate(1["/"](dt)));
+                    "139";
+                    node.pos=node.pos["+"](v["*"](dt));
+                    "140";
+                    (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)][0].pos = node.pos;
+                    "141";
+                    t=t["+"](dt);
+                }
+                "143";
+                (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)][0].visible = false;
+                "144";
+                (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)][1].visible = false;
+                "145";
+                node.visible = false;
+                "147";
+                if ((await self.is_left(node))) {
+                    "148";
+                    node.parent.left = null;
+                    "149";
+                } else {
+                    "150";
+                    node.parent.right = null;
+                }
+                "152";
+                to_return = node;
+                "153";
+                ρσ_delitem(self.label_dict, node.value);
+                "154";
+                node = undefined;
+                "156";
+            } else if (ρσ_equals((await self.child_count(node)), 1)) {
+                "157";
+                while (t["<"](2)) {
+                    "158";
+                    (await rate(1["/"](dt)));
+                    "159";
+                    node.pos=node.pos["+"](v["*"](dt));
+                    "160";
+                    (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)][0].pos = node.pos;
+                    "161";
+                    t=t["+"](dt);
+                }
+                "163";
+                (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)][0].visible = false;
+                "164";
+                (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)][1].visible = false;
+                "165";
+                node.visible = false;
+                "167";
+                if ((await self.is_left(node))) {
+                    "168";
+                    if (node.right === null) {
+                        "169";
+                        (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.left.value, ρσ_expr_temp)][1].pos = node.parent.pos;
+                        "170";
+                        (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.left.value, ρσ_expr_temp)][1].axis = node.left.pos["-"](node.parent.pos);
+                        "173";
+                        node.parent.left = node.left;
+                        "174";
+                        node.left.parent = node.parent;
+                        "175";
+                    } else {
+                        "176";
+                        (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.right.value, ρσ_expr_temp)][1].pos = node.parent.pos;
+                        "177";
+                        (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.right.value, ρσ_expr_temp)][1].axis = node.right.pos["-"](node.parent.pos);
+                        "180";
+                        node.parent.left = node.right;
+                        "181";
+                        node.right.parent = node.parent;
+                        "182";
+                    }
+                } else {
+                    "183";
+                    if (node.right === null) {
+                        "184";
+                        (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.left.value, ρσ_expr_temp)][1].pos = node.parent.pos;
+                        "185";
+                        (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.left.value, ρσ_expr_temp)][1].axis = node.left.pos["-"](node.parent.pos);
+                        "188";
+                        node.parent.right = node.left;
+                        "189";
+                        node.left.parent = node.parent;
+                        "190";
+                    } else {
+                        "191";
+                        (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.right.value, ρσ_expr_temp)][1].pos = node.parent.pos;
+                        "192";
+                        (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.right.value, ρσ_expr_temp)][1].axis = node.right.pos["-"](node.parent.pos);
+                        "195";
+                        node.parent.right = node.right;
+                        "196";
+                        node.right.parent = node.parent;
+                    }
+                }
+                "198";
+                to_return = node;
+                "199";
+                ρσ_delitem(self.label_dict, node.value);
+                "200";
+                node = undefined;
+            }
+            "202";
+            (await self.refactor());
+            "203";
+            return to_return;
+        };
+        if (!BST.prototype.remove_item.__argnames__) Object.defineProperties(BST.prototype.remove_item, {
+            __argnames__ : {value: ["value"]},
+            __module__ : {value: null}
+        });
+        BST.prototype.refactor = async function refactor() {
+            var self = this;
+            var level_breadth = (arguments[0] === undefined || ( 0 === arguments.length["-"](1) && arguments[arguments.length["-"](1)] !== null && typeof arguments[arguments.length["-"](1)] === "object" && arguments[arguments.length["-"](1)] [ρσ_kwargs_symbol] === true)) ? refactor.__defaults__.level_breadth : arguments[0];
+            var level_hgt = (arguments[1] === undefined || ( 1 === arguments.length["-"](1) && arguments[arguments.length["-"](1)] !== null && typeof arguments[arguments.length["-"](1)] === "object" && arguments[arguments.length["-"](1)] [ρσ_kwargs_symbol] === true)) ? refactor.__defaults__.level_hgt : arguments[1];
+            var ρσ_kwargs_obj = arguments[arguments.length["-"](1)];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "level_breadth")){
+                level_breadth = ρσ_kwargs_obj.level_breadth;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "level_hgt")){
+                level_hgt = ρσ_kwargs_obj.level_hgt;
+            }
+            var ρσ_ls, tree_depth, queue, node, node_label, node_depth, node_arrow;
+            "206";
+            if (self.root === null) {
+                "207";
+                return;
+                "209";
+            }
+            if ((level_breadth === "default" || typeof level_breadth === "object" && ρσ_equals(level_breadth, "default"))) {
+                "210";
+                level_breadth = self.level_breadth;
+                "212";
+            }
+            if ((level_hgt === "default" || typeof level_hgt === "object" && ρσ_equals(level_hgt, "default"))) {
+                "213";
+                level_hgt = self.level_hgt;
+            }
+            "215";
+            tree_depth = (await self.get_height(self.root));
+            "217";
+            queue = ρσ_list_decorate([]);
+            "218";
+            queue.append(self.root);
+            "219";
+            while (len(queue)[">"](0)) {
+                "220";
+                node = queue.pop();
+                "221";
+                if (node.left) {
+                    "222";
+                    queue.append(node.left);
+                    "223";
+                }
+                if (node.right) {
+                    "224";
+                    queue.append(node.right);
+                    "226";
+                }
+                if (node === self.root) {
+                    "227";
+                    node.radius = Math.pow(1.5, tree_depth);
+                    "228";
+                    node_label = (await self.get_label(node));
+                    "229";
+                    node_label.height = max(Math.pow(1.5, tree_depth), 10);
+                    "230";
+                    continue;
+                }
+                "232";
+                node_depth = (await self.get_depth(node));
+                "233";
+                if ((await self.is_left(node))) {
+                    "234";
+                    node.pos = vector(node.parent.pos.x["-"](level_breadth["*"](Math.pow(1.5, (tree_depth["-"](node_depth)))))["-"](node.radius), node.parent.pos.y["-"](level_hgt["*"](Math.pow(1.5, (tree_depth["-"](node_depth))))), node.pos.z);
+                    "241";
+                } else {
+                    "242";
+                    node.pos = vector(node.parent.pos.x["+"](level_breadth["*"](Math.pow(1.5, (tree_depth["-"](node_depth)))))["+"](node.radius), node.parent.pos.y["-"](level_hgt["*"](Math.pow(1.5, (tree_depth["-"](node_depth))))), node.pos.z);
+                }
+                "249";
+                node.radius = Math.pow(1.5, (tree_depth["-"](node_depth)));
+                "251";
+                node_label = (await self.get_label(node));
+                "252";
+                node_arrow = (await self.get_arrow(node));
+                "254";
+                node_label.pos = node.pos;
+                "255";
+                node_label.height = max(Math.pow(1.5, (tree_depth["-"](node_depth))), 10);
+                "257";
+                node_arrow.pos = node.parent.pos;
+                "258";
+                node_arrow.axis = node.pos["-"](node.parent.pos);
+            }
+        };
+        if (!BST.prototype.refactor.__defaults__) Object.defineProperties(BST.prototype.refactor, {
+            __defaults__ : {value: {level_breadth:"default", level_hgt:"default"}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["level_breadth", "level_hgt"]},
+            __module__ : {value: null}
+        });
+        BST.prototype.build_tree = async function build_tree(items) {
+            var self = this;
+            var ρσ_ls, mid;
+            "261";
+            mid = (await Math.floor(len(items)["/"](2)));
+            "262";
+            (await self.add_item(items[(typeof mid === "number" && mid["<"](0)) ? items.length["+"](mid) : mid]));
+            "264";
+            ρσ_delitem(items, mid);
+            "265";
+            if (len(items)[">"](1)) {
+                "266";
+                (await self.build_tree(items.slice(0, mid)));
+                "267";
+                (await self.build_tree(items.slice(mid, len(items)["+"](1))));
+                "268";
+            } else {
+                "269";
+                if (ρσ_equals(len(items), 1)) {
+                    "270";
+                    (await self.add_item(items[0]));
+                }
+            }
+        };
+        if (!BST.prototype.build_tree.__argnames__) Object.defineProperties(BST.prototype.build_tree, {
+            __argnames__ : {value: ["items"]},
+            __module__ : {value: null}
+        });
+        BST.prototype.get_height = async function get_height() {
+            var self = this;
+            var node = (arguments[0] === undefined || ( 0 === arguments.length["-"](1) && arguments[arguments.length["-"](1)] !== null && typeof arguments[arguments.length["-"](1)] === "object" && arguments[arguments.length["-"](1)] [ρσ_kwargs_symbol] === true)) ? get_height.__defaults__.node : arguments[0];
+            var ρσ_kwargs_obj = arguments[arguments.length["-"](1)];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "node")){
+                node = ρσ_kwargs_obj.node;
+            }
+            "273";
+            if ((node === "root" || typeof node === "object" && ρσ_equals(node, "root"))) {
+                "274";
+                node = self.root;
+                "275";
+            }
+            if (node === null) {
+                "276";
+                return 0;
+                "277";
+            } else {
+                "278";
+                return 1["+"](max((await self.get_height(node.left)), (await self.get_height(node.right))));
+            }
+        };
+        if (!BST.prototype.get_height.__defaults__) Object.defineProperties(BST.prototype.get_height, {
+            __defaults__ : {value: {node:"root"}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["node"]},
+            __module__ : {value: null}
+        });
+        BST.prototype.get_depth = async function get_depth(node) {
+            var self = this;
+            "281";
+            if ((node === self.root || typeof node === "object" && ρσ_equals(node, self.root))) {
+                "282";
+                return 0;
+                "283";
+            } else {
+                "284";
+                return 1["+"]((await self.get_depth(node.parent)));
+            }
+        };
+        if (!BST.prototype.get_depth.__argnames__) Object.defineProperties(BST.prototype.get_depth, {
+            __argnames__ : {value: ["node"]},
+            __module__ : {value: null}
+        });
+        BST.prototype.preorderTraverse = async function preorderTraverse(v) {
+            var self = this;
+            var ρσ_ls, curnode;
+            "287";
+            curnode = v;
+            "288";
+            curnode.color = color.red;
+            "289";
+            ρσ_interpolate_kwargs.call(this, print, (await [curnode.value].concat([ρσ_desugar_kwargs({end: " "})])));
+            "290";
+            (await sleep(1));
+            "291";
+            if ((curnode.left !== null && (typeof curnode.left !== "object" || ρσ_not_equals(curnode.left, null)))) {
+                "292";
+                (await self.preorderTraverse(curnode.left));
+                "293";
+            }
+            if ((curnode.right !== null && (typeof curnode.right !== "object" || ρσ_not_equals(curnode.right, null)))) {
+                "294";
+                (await self.preorderTraverse(curnode.right));
+            }
+            "295";
+            return;
+        };
+        if (!BST.prototype.preorderTraverse.__argnames__) Object.defineProperties(BST.prototype.preorderTraverse, {
+            __argnames__ : {value: ["v"]},
+            __module__ : {value: null}
+        });
+        BST.prototype.postorderTraverse = async function postorderTraverse(v) {
+            var self = this;
+            var ρσ_ls, curnode;
+            "298";
+            curnode = v;
+            "299";
+            curnode.color = color.magenta;
+            "300";
+            if ((curnode.left !== null && (typeof curnode.left !== "object" || ρσ_not_equals(curnode.left, null)))) {
+                "301";
+                (await sleep(1));
+                "302";
+                (await self.postorderTraverse(curnode.left));
+                "303";
+            }
+            if ((curnode.right !== null && (typeof curnode.right !== "object" || ρσ_not_equals(curnode.right, null)))) {
+                "304";
+                (await sleep(1));
+                "305";
+                (await self.postorderTraverse(curnode.right));
+            }
+            "306";
+            (await sleep(1));
+            "307";
+            curnode.color = color.red;
+            "308";
+            ρσ_interpolate_kwargs.call(this, print, (await [curnode.value].concat([ρσ_desugar_kwargs({end: " "})])));
+            "309";
+            return;
+        };
+        if (!BST.prototype.postorderTraverse.__argnames__) Object.defineProperties(BST.prototype.postorderTraverse, {
+            __argnames__ : {value: ["v"]},
+            __module__ : {value: null}
+        });
+        BST.prototype.inorderTraverse = async function inorderTraverse(curnode) {
+            var self = this;
+            "312";
+            curnode.color = color.magenta;
+            "313";
+            if ((curnode.left !== null && (typeof curnode.left !== "object" || ρσ_not_equals(curnode.left, null)))) {
+                "314";
+                (await sleep(1));
+                "315";
+                (await self.inorderTraverse(curnode.left));
+            }
+            "316";
+            (await sleep(1));
+            "317";
+            curnode.color = color.red;
+            "318";
+            ρσ_interpolate_kwargs.call(this, print, (await [curnode.value].concat([ρσ_desugar_kwargs({end: " "})])));
+            "320";
+            if ((curnode.right !== null && (typeof curnode.right !== "object" || ρσ_not_equals(curnode.right, null)))) {
+                "321";
+                (await sleep(1));
+                "322";
+                (await self.inorderTraverse(curnode.right));
+            }
+            "323";
+            return;
+        };
+        if (!BST.prototype.inorderTraverse.__argnames__) Object.defineProperties(BST.prototype.inorderTraverse, {
+            __argnames__ : {value: ["curnode"]},
+            __module__ : {value: null}
+        });
+        BST.prototype.add_items = async function add_items() {
+            var self = this;
+            var args = Array.prototype.slice.call(arguments, 0);
+            if (arguments[arguments.length["-"](1)] !== null && typeof arguments[arguments.length["-"](1)] === "object" && arguments[arguments.length["-"](1)] [ρσ_kwargs_symbol] === true) args.pop();
+            var ρσ_ls, value;
+            "326";
+            var ρσ_Iter1 = args;
+            ρσ_Iter1 = ((typeof ρσ_Iter1[Symbol.iterator] === "function") ? (ρσ_Iter1 instanceof Map ? ρσ_Iter1.keys() : ρσ_Iter1) : Object.keys(ρσ_Iter1));
+            for (var ρσ_Index1 of ρσ_Iter1) {
+                value = ρσ_Index1;
+                "327";
+                (await self.add_item(value));
+            }
+        };
+        if (!BST.prototype.add_items.__handles_kwarg_interpolation__) Object.defineProperties(BST.prototype.add_items, {
+            __handles_kwarg_interpolation__ : {value: true},
+            __module__ : {value: null}
+        });
+        BST.prototype.is_leaf = async function is_leaf(node) {
+            var self = this;
+            "330";
+            return node.left === null && node.right === null;
+        };
+        if (!BST.prototype.is_leaf.__argnames__) Object.defineProperties(BST.prototype.is_leaf, {
+            __argnames__ : {value: ["node"]},
+            __module__ : {value: null}
+        });
+        BST.prototype.is_left = async function is_left(node) {
+            var self = this;
+            "333";
+            return node === node.parent.left;
+        };
+        if (!BST.prototype.is_left.__argnames__) Object.defineProperties(BST.prototype.is_left, {
+            __argnames__ : {value: ["node"]},
+            __module__ : {value: null}
+        });
+        BST.prototype.child_count = async function child_count(node) {
+            var self = this;
+            "336";
+            return (node.left === null) ? 0 : 1["+"]((node.right === null) ? 0 : 1);
+        };
+        if (!BST.prototype.child_count.__argnames__) Object.defineProperties(BST.prototype.child_count, {
+            __argnames__ : {value: ["node"]},
+            __module__ : {value: null}
+        });
+        BST.prototype.get_label = async function get_label(node) {
+            var self = this;
+            "339";
+            return (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)][0];
+        };
+        if (!BST.prototype.get_label.__argnames__) Object.defineProperties(BST.prototype.get_label, {
+            __argnames__ : {value: ["node"]},
+            __module__ : {value: null}
+        });
+        BST.prototype.get_arrow = async function get_arrow(node) {
+            var self = this;
+            "342";
+            return (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)][1];
+        };
+        if (!BST.prototype.get_arrow.__argnames__) Object.defineProperties(BST.prototype.get_arrow, {
+            __argnames__ : {value: ["node"]},
+            __module__ : {value: null}
+        });
+        BST.prototype.change_color = async function change_color() {
+            var self = this;
+            var ρσ_ls, i;
+            "345";
+            var ρσ_Iter2 = self.node_list;
+            ρσ_Iter2 = ((typeof ρσ_Iter2[Symbol.iterator] === "function") ? (ρσ_Iter2 instanceof Map ? ρσ_Iter2.keys() : ρσ_Iter2) : Object.keys(ρσ_Iter2));
+            for (var ρσ_Index2 of ρσ_Iter2) {
+                i = ρσ_Index2;
+                "346";
+                i.color = color.cyan;
+            }
+        };
+        if (!BST.prototype.change_color.__module__) Object.defineProperties(BST.prototype.change_color, {
+            __module__ : {value: null}
+        });
+        BST.prototype.get_value = async function get_value(node) {
+            var self = this;
+            "349";
+            return node.value;
+        };
+        if (!BST.prototype.get_value.__argnames__) Object.defineProperties(BST.prototype.get_value, {
+            __argnames__ : {value: ["node"]},
+            __module__ : {value: null}
+        });
+        BST.prototype.__repr__ = async function __repr__() {
+                    return "<"["+"](__name__)["+"](".")["+"](this.constructor.name)["+"](" #")["+"](this.ρσ_object_id)["+"](">");
+        };
+        BST.prototype.__str__ = async function __str__() {
+            return (await this.__repr__());
+        };
+        Object.defineProperty(BST.prototype, "__bases__", {value: []});
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+        "352";
+        inp_str = "";
+        "353";
+        win = null;
+        "355";
+        async function bind_fn(obj) {
+            "356";
+            "357";
+            inp_str = obj.text;
+            "358";
+            win.remove();
+        };
+        if (!bind_fn.__argnames__) Object.defineProperties(bind_fn, {
+            __argnames__ : {value: ["obj"]},
+            __module__ : {value: null}
+        });
+    
+        "361";
+        async function get_input() {
+            var prompt_text = (arguments[0] === undefined || ( 0 === arguments.length["-"](1) && arguments[arguments.length["-"](1)] !== null && typeof arguments[arguments.length["-"](1)] === "object" && arguments[arguments.length["-"](1)] [ρσ_kwargs_symbol] === true)) ? get_input.__defaults__.prompt_text : arguments[0];
+            var ρσ_kwargs_obj = arguments[arguments.length["-"](1)];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "prompt_text")){
+                prompt_text = ρσ_kwargs_obj.prompt_text;
+            }
+            "362";
+            "363";
+            inp_str = "";
+            (await sleep(.1));
+            "364";
+            win = ρσ_interpolate_kwargs.call(this, winput, [ρσ_desugar_kwargs({prompt: prompt_text, type: "string", bind: bind_fn})]);
+        };
+        if (!get_input.__defaults__) Object.defineProperties(get_input, {
+            __defaults__ : {value: {prompt_text:""}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["prompt_text"]},
+            __module__ : {value: null}
+        });
+    
+        "367";
+        async function wait_for_input() {
+            "368";
+            "369";
+            while ((inp_str === "" || typeof inp_str === "object" && ρσ_equals(inp_str, ""))) {
+                "370";
+                (await rate(100));
+            }
+        };
+        if (!wait_for_input.__module__) Object.defineProperties(wait_for_input, {
+            __module__ : {value: null}
+        });
+    
+        "372";
+        async function main() {
+            var ρσ_ls, _GS_1, bst, arr, inputs, val, node;
+            "373";
+            "374";
+            _GS_1 = new BST;
+            (await _GS_1.__init__());
+            bst = _GS_1;
+            "376";
+            (await get_input("Enter elements to build a Binary Search tree: "));
+            "377";
+            (await wait_for_input());
+            "379";
+            arr = list((await set((await map(int, (await inp_str.split(" ")))))));
+            "380";
+            (await arr.pysort());
+            "381";
+            (await bst.build_tree(arr));
+            "383";
+            print("\n        Inorder - inord\n        PostOrder - postord\n        PreOrder - preord\n        Search - S\n        Insert - I\n        Deletion - D\n        TO EXIT ENTER - X\n        ");
+            "395";
+            while (true) {
+                "396";
+                (await get_input("Enter operation: "));
+                "397";
+                (await wait_for_input());
+                "399";
+                inputs = (await (await inp_str.lower()).split(" "));
+                "400";
+                if ((inputs[0] === "inord" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "inord"))) {
+                    "401";
+                    (await bst.inorderTraverse(bst.root));
+                    "402";
+                    (await bst.change_color());
+                    "403";
+                    print();
+                    "404";
+                } else if ((inputs[0] === "preord" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "preord"))) {
+                    "405";
+                    (await bst.preorderTraverse(bst.root));
+                    "406";
+                    (await bst.change_color());
+                    "407";
+                    print();
+                    "408";
+                } else if ((inputs[0] === "postord" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "postord"))) {
+                    "409";
+                    (await bst.postorderTraverse(bst.root));
+                    "410";
+                    (await bst.change_color());
+                    "411";
+                    print();
+                    "412";
+                } else if ((inputs[0] === "s" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "s"))) {
+                    "413";
+                    val = int(inputs[1]);
+                    "414";
+                    node = (await bst.search_item(bst.root, val));
+                    "415";
+                    if (node === null) {
+                        "416";
+                        print(""["+"](ρσ_str.format("{}", val))["+"](" is not present"));
+                        "417";
+                    } else {
+                        "418";
+                        print(""["+"](ρσ_str.format("{}", node.value))["+"](" found!!"));
+                        "419";
+                    }
+                } else if ((inputs[0] === "i" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "i"))) {
+                    "420";
+                    val = int(inputs[1]);
+                    "421";
+                    while (ρσ_in(val, (await bst.label_dict.keys()))) {
+                        "422";
+                        (await get_input("Enter a value not present in the tree: "));
+                        "423";
+                        (await wait_for_input());
+                        "425";
+                        val = int(inp_str);
+                    }
+                    "426";
+                    (await bst.search_item(bst.root, val));
+                    "427";
+                    (await bst.add_item(val));
+                    "428";
+                    print();
+                    "429";
+                } else if ((inputs[0] === "d" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "d"))) {
+                    "430";
+                    val = int(inputs[1]);
+                    "431";
+                    node = (await bst.remove_item(val));
+                    "432";
+                    if (node === null) {
+                        "433";
+                        print(""["+"](ρσ_str.format("{}", val))["+"](" is not present"));
+                        "434";
+                    } else {
+                        "435";
+                        print(""["+"](ρσ_str.format("{}", node.value))["+"](" deleted"));
+                    }
+                    "436";
+                    print();
+                    "438";
+                } else if ((inputs[0] === "x" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "x"))) {
+                    "439";
+                    break;
+                }
+            }
+            "441";
+            print("Program Terminated");
+            "445";
+        };
+        if (!main.__module__) Object.defineProperties(main, {
+            __module__ : {value: null}
+        });
+    
+        if ((__name__ === "__main__" || typeof __name__ === "object" && ρσ_equals(__name__, "__main__"))) {
+            "446";
+            (await main());
+        }
+    };
+    if (!__main__.__module__) Object.defineProperties(__main__, {
+        __module__ : {value: null}
+    });
+    
+    ;$(function(){ window.__context = { glowscript_container: $("#glowscript").removeAttr("id") }; __main__() })})()
+    // END JAVASCRIPT
+    
+    //--><!]]></script>
+    </div>
