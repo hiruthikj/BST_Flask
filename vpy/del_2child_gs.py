@@ -402,14 +402,17 @@ def main():
 
         inputs = inp_str.split(" ")
         if inputs[0] == "inord":
+            print("Inorder Traversal :")
             bst.inorderTraverse(bst.root)
             bst.change_color()
             print()
         elif inputs[0] == "preord":
+            print("Preorder Traversal :")
             bst.preorderTraverse(bst.root)
             bst.change_color()
             print()
         elif inputs[0] == "postord":
+            print("Postorder Traversal :")
             bst.postorderTraverse(bst.root)
             bst.change_color()
             print()
