@@ -798,7 +798,7 @@
         
             "388";
             async function main() {
-                var RS_ls, _GS_1, bst, arr, inputs, val, node, node_list_vals;
+                var RS_ls, _GS_1, bst, arr, inputs, w, val, node, node_list_vals;
                 "389";
                 "390";
                 _GS_1 = new BST;
@@ -825,53 +825,71 @@
                     "404";
                     if ((inputs[0] === "inord" || typeof inputs[0] === "object" && RS_equals(inputs[0], "inord"))) {
                         "405";
-                        print("Inorder Traversal :");
+                        w = RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({text: "<h1>Inorder Traversal</h1>", pos: scene.title_anchor})]);
                         "406";
-                        (await bst.inorderTraverse(bst.root));
+                        print("Inorder Traversal :");
                         "407";
-                        (await bst.change_color());
+                        (await bst.inorderTraverse(bst.root));
                         "408";
-                        print();
+                        (await bst.change_color());
                         "409";
-                    } else if ((inputs[0] === "preord" || typeof inputs[0] === "object" && RS_equals(inputs[0], "preord"))) {
+                        print();
                         "410";
-                        print("Preorder Traversal :");
+                        w.remove();
                         "411";
-                        (await bst.preorderTraverse(bst.root));
+                    } else if ((inputs[0] === "preord" || typeof inputs[0] === "object" && RS_equals(inputs[0], "preord"))) {
                         "412";
-                        (await bst.change_color());
+                        w = RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({text: "<h1>Preorder Traversal</h1>", pos: scene.title_anchor})]);
                         "413";
-                        print();
+                        print("Preorder Traversal :");
                         "414";
-                    } else if ((inputs[0] === "postord" || typeof inputs[0] === "object" && RS_equals(inputs[0], "postord"))) {
+                        (await bst.preorderTraverse(bst.root));
                         "415";
-                        print("Postorder Traversal :");
-                        "416";
-                        (await bst.postorderTraverse(bst.root));
-                        "417";
                         (await bst.change_color());
-                        "418";
+                        "416";
                         print();
+                        "417";
+                        w.remove();
+                        "418";
+                    } else if ((inputs[0] === "postord" || typeof inputs[0] === "object" && RS_equals(inputs[0], "postord"))) {
                         "419";
-                    } else if ((inputs[0] === "S" || typeof inputs[0] === "object" && RS_equals(inputs[0], "S"))) {
+                        w = RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({text: "<h1>Postorder Traversal</h1>", pos: scene.title_anchor})]);
                         "420";
-                        val = int(inputs[1]);
+                        print("Postorder Traversal :");
                         "421";
-                        node = (await bst.search_item(bst.root, val));
+                        (await bst.postorderTraverse(bst.root));
                         "422";
-                        if (node === null) {
-                            "423";
-                            print(""["+"](RS_str.format("{}", val))["+"](" is not present"));
-                            "424";
-                        } else {
-                            "425";
-                            print(""["+"](RS_str.format("{}", node.value))["+"](" found!!"));
-                            "426";
-                        }
-                    } else if ((inputs[0] === "I" || typeof inputs[0] === "object" && RS_equals(inputs[0], "I"))) {
+                        (await bst.change_color());
+                        "423";
+                        print();
+                        "424";
+                        w.remove();
+                        "425";
+                    } else if ((inputs[0] === "S" || typeof inputs[0] === "object" && RS_equals(inputs[0], "S"))) {
+                        "426";
+                        w = RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({text: "<h1>Search</h1>", pos: scene.title_anchor})]);
                         "427";
                         val = int(inputs[1]);
                         "428";
+                        node = (await bst.search_item(bst.root, val));
+                        "429";
+                        if (node === null) {
+                            "430";
+                            print(""["+"](RS_str.format("{}", val))["+"](" is not present"));
+                            "431";
+                        } else {
+                            "432";
+                            print(""["+"](RS_str.format("{}", node.value))["+"](" found!!"));
+                        }
+                        "433";
+                        w.remove();
+                        "434";
+                    } else if ((inputs[0] === "I" || typeof inputs[0] === "object" && RS_equals(inputs[0], "I"))) {
+                        "435";
+                        w = RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({text: "<h1>Insertion</h1>", pos: scene.title_anchor})]);
+                        "436";
+                        val = int(inputs[1]);
+                        "437";
                         node_list_vals = (function() {
                             var RS_Iter = bst.node_list, RS_Result = [], node;
                             RS_Iter = ((typeof RS_Iter[Symbol.iterator] === "function") ? (RS_Iter instanceof Map ? RS_Iter.keys() : RS_Iter) : Object.keys(RS_Iter));
@@ -882,54 +900,60 @@
                             RS_Result = RS_list_constructor(RS_Result);
                             return RS_Result;
                         })();
-                        "429";
+                        "438";
                         while (RS_in(val, node_list_vals)) {
-                            "430";
+                            "439";
                             (await get_input("Enter a value not present in the tree: "));
-                            "431";
+                            "440";
                             (await wait_for_input());
-                            "432";
+                            "441";
                             val = int(inp_str);
                         }
-                        "433";
+                        "442";
                         (await bst.search_item(bst.root, val));
-                        "434";
-                        (await bst.add_item(val));
-                        "435";
-                        print();
-                        "436";
-                    } else if ((inputs[0] === "D" || typeof inputs[0] === "object" && RS_equals(inputs[0], "D"))) {
-                        "437";
-                        val = int(inputs[1]);
-                        "438";
-                        node = (await bst.remove_item(val));
-                        "439";
-                        if (node === null) {
-                            "440";
-                            print(""["+"](RS_str.format("{}", val))["+"](" is not present"));
-                            "441";
-                        } else {
-                            "442";
-                            print(""["+"](RS_str.format("{}", val))["+"](" deleted"));
-                        }
                         "443";
+                        (await bst.add_item(val));
+                        "444";
                         print();
                         "445";
-                    } else if ((inputs[0] === "X" || typeof inputs[0] === "object" && RS_equals(inputs[0], "X"))) {
+                        w.remove();
                         "446";
+                    } else if ((inputs[0] === "D" || typeof inputs[0] === "object" && RS_equals(inputs[0], "D"))) {
+                        "447";
+                        w = RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({text: "<h1>Deletion</h1>", pos: scene.title_anchor})]);
+                        "448";
+                        val = int(inputs[1]);
+                        "449";
+                        node = (await bst.remove_item(val));
+                        "450";
+                        if (node === null) {
+                            "451";
+                            print(""["+"](RS_str.format("{}", val))["+"](" is not present"));
+                            "452";
+                        } else {
+                            "453";
+                            print(""["+"](RS_str.format("{}", val))["+"](" deleted"));
+                        }
+                        "454";
+                        print();
+                        "455";
+                        w.remove();
+                        "457";
+                    } else if ((inputs[0] === "X" || typeof inputs[0] === "object" && RS_equals(inputs[0], "X"))) {
+                        "458";
                         break;
                     }
                 }
-                "448";
+                "460";
                 print("Program Terminated");
-                "452";
+                "464";
             };
             if (!main.__module__) Object.defineProperties(main, {
                 __module__ : {value: "__main__"}
             });
         
             if ((__name__ === "__main__" || typeof __name__ === "object" && RS_equals(__name__, "__main__"))) {
-                "453";
+                "465";
                 (await main());
             }
         };
