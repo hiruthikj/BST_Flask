@@ -402,28 +402,37 @@ def main():
 
         inputs = inp_str.split(" ")
         if inputs[0] == "inord":
+            w = wtext(text='<h1>Inorder Traversal</h1>',pos=scene.title_anchor)
             print("Inorder Traversal :")
             bst.inorderTraverse(bst.root)
             bst.change_color()
             print()
+            w.delete()
         elif inputs[0] == "preord":
+            w = wtext(text='<h1>Preorder Traversal</h1>',pos=scene.title_anchor)
             print("Preorder Traversal :")
             bst.preorderTraverse(bst.root)
             bst.change_color()
             print()
+            w.delete()
         elif inputs[0] == "postord":
+            w = wtext(text='<h1>Postorder Traversal</h1>',pos=scene.title_anchor)
             print("Postorder Traversal :")
             bst.postorderTraverse(bst.root)
             bst.change_color()
             print()
+            w.delete()
         elif inputs[0] == "S":
+            w = wtext(text='<h1>Search</h1>',pos=scene.title_anchor)
             val = int(inputs[1])
             node = bst.search_item(bst.root, val)
             if node is None:
                 print(f"{val} is not present")
             else:
                 print(f"{node.value} found!!")
+            w.delete()
         elif inputs[0] == "I":
+            w = wtext(text='<h1>Insertion</h1>',pos=scene.title_anchor)
             val = int(inputs[1])
             node_list_vals = [ node.value for node in bst.node_list ]
             while val in node_list_vals:
@@ -433,7 +442,9 @@ def main():
             bst.search_item(bst.root, val)
             bst.add_item(val)
             print()
+            w.delete()
         elif inputs[0] == "D":
+            w = wtext(text='<h1>Deletion</h1>',pos=scene.title_anchor)
             val = int(inputs[1])
             node = bst.remove_item(val)
             if node is None:
@@ -441,6 +452,7 @@ def main():
             else:
                 print(f"{val} deleted")
             print()
+            w.delete()
 
         elif inputs[0] == "X":
             break
