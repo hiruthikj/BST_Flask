@@ -1,4 +1,4 @@
-GlowScript 3.1 VPython
+GlowScript 3.0 VPython
 # from time import sleep
 # from vpython import *
 
@@ -36,7 +36,6 @@ class BST:
                 parent=None
             )
             self.node_list.append(new_node)
-#issue
 
             self.label_dict[value] = (
                 label(
@@ -197,6 +196,17 @@ class BST:
             del self.label_dict[node.value]
             del node
 
+        else:
+            next_inorder_value = self.get_next_inorder(node).value
+            to_return = self.remove_item(next_inorder_value)
+
+            self.get_label(node).text = next_inorder_value
+            self.label_dict[next_inorder_value] = self.label_dict[node.value]
+            del self.label_dict[node.value]
+            
+            node.value = next_inorder_value
+
+    
         self.refactor()
         return to_return
 
@@ -214,8 +224,11 @@ class BST:
 
         queue = []
         queue.append(self.root)
+        last_ele = None
+
         while len(queue) > 0:
             node = queue.pop()
+            last_ele = node
             if node.left:
                 queue.append(node.left)
             if node.right:
@@ -254,6 +267,9 @@ class BST:
 
             node_arrow.pos = node.parent.pos
             node_arrow.axis = node.pos - node.parent.pos
+
+        if last_ele:
+            scene.center = self.root.pos + vector(0, last_ele.pos.y, 0)
 
     def build_tree(self, items):
         mid = len(items) // 2
@@ -306,6 +322,7 @@ class BST:
         print(curnode.value, end=" ")
         return
 
+
     def inorderTraverse(self, curnode):
         curnode.color = color.magenta
         if curnode.left != None:
@@ -319,6 +336,13 @@ class BST:
             sleep(1)
             self.inorderTraverse(curnode.right)
         return
+
+    def get_next_inorder(self,node):
+        curr_node = node.right
+        while curr_node.left:
+            curr_node = curr_node.left
+
+        return curr_node
 
     def add_items(self, *args):
         for value in args:
@@ -378,62 +402,65 @@ def main():
     arr.sort()
     bst.build_tree(arr)
 
-    print(
-        """
-        Inorder - inord
-        PostOrder - postord
-        PreOrder - preord
-        Search - S
-        Insert - I
-        Deletion - D
-        TO EXIT ENTER - X
-        """
-    )
-
     while True:
         get_input("Enter operation: ")
         wait_for_input()
 
-        inputs = inp_str.lower().split(" ")
+        inputs = inp_str.split(" ")
         if inputs[0] == "inord":
+            w = wtext(text='<h1>Inorder Traversal</h1>',pos=scene.title_anchor)
+            print("Inorder Traversal :")
             bst.inorderTraverse(bst.root)
             bst.change_color()
             print()
+            w.delete()
         elif inputs[0] == "preord":
+            w = wtext(text='<h1>Preorder Traversal</h1>',pos=scene.title_anchor)
+            print("Preorder Traversal :")
             bst.preorderTraverse(bst.root)
             bst.change_color()
             print()
+            w.delete()
         elif inputs[0] == "postord":
+            w = wtext(text='<h1>Postorder Traversal</h1>',pos=scene.title_anchor)
+            print("Postorder Traversal :")
             bst.postorderTraverse(bst.root)
             bst.change_color()
             print()
-        elif inputs[0] == "s":
+            w.delete()
+        elif inputs[0] == "S":
+            w = wtext(text='<h1>Search</h1>',pos=scene.title_anchor)
             val = int(inputs[1])
             node = bst.search_item(bst.root, val)
             if node is None:
                 print(f"{val} is not present")
             else:
                 print(f"{node.value} found!!")
-        elif inputs[0] == "i":
+            w.delete()
+        elif inputs[0] == "I":
+            w = wtext(text='<h1>Insertion</h1>',pos=scene.title_anchor)
             val = int(inputs[1])
-            while val in bst.label_dict.keys():
+            node_list_vals = [ node.value for node in bst.node_list ]
+            while val in node_list_vals:
                 get_input("Enter a value not present in the tree: ")
                 wait_for_input()
-
                 val = int(inp_str)
             bst.search_item(bst.root, val)
             bst.add_item(val)
             print()
-        elif inputs[0] == "d":
+            w.delete()
+        elif inputs[0] == "D":
+            w = wtext(text='<h1>Deletion</h1>',pos=scene.title_anchor)
             val = int(inputs[1])
             node = bst.remove_item(val)
             if node is None:
                 print(f"{val} is not present")
             else:
-                print(f"{node.value} deleted")
+                print(f"{val} deleted")
             print()
+            w.delete()
 
-        elif inputs[0] == "x":
+        elif inputs[0] == "X":
             break
 
     print("Program Terminated")

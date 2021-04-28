@@ -1,0 +1,948 @@
+<div id="glowscript" class="glowscript">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link type="text/css" href="https://www.glowscript.org/css/redmond/2.1/jquery-ui.custom.css" rel="stylesheet" />
+<link type="text/css" href="https://www.glowscript.org/css/ide.css" rel="stylesheet" />
+<script type="text/javascript" src="https://www.glowscript.org/lib/jquery/2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.glowscript.org/lib/jquery/2.1/jquery-ui.custom.min.js"></script>
+<script type="text/javascript" src="https://www.glowscript.org/package/glow.3.0.min.js"></script>
+<script type="text/javascript" src="https://www.glowscript.org/package/RSrun.3.0.min.js"></script>
+<script type="text/javascript"><!--//--><![CDATA[//><!--
+
+// START JAVASCRIPT
+;(function() {;
+var inp_str, win;
+async function __main__() {
+"use strict";
+
+    var version, display, vector, print, arange, __name__, type, scene, RS_ls, inp_str, win;
+    version = RS_list_decorate([ "3.0", "glowscript" ]);
+    Array.prototype['+'] = function(r) {return this.concat(r)}
+    Array.prototype['*'] = function(r) {return __array_times_number(this, r)}
+    window.__GSlang = "vpython";
+    display = canvas;
+    vector = vec;
+    print = GSprint;
+    arange = range;
+    __name__ = "__main__";
+    type = pytype;
+    scene = canvas();
+    "6";
+    function BST() {;
+    }
+    BST.prototype.__init__ = async function __init__() {
+        var self = this;
+        "8";
+        self.root = null;
+        "9";
+        self.label_dict = {};
+        "10";
+        self.node_list = RS_list_decorate([]);
+        "12";
+        self.level_breadth = 5;
+        "13";
+        self.level_hgt = 5;
+        "14";
+        self.radius = 2;
+        "16";
+        self.font_size = 15;
+        "18";
+        scene.background = color.white;
+        "19";
+        scene.autoscale = true;
+        "21";
+        scene.width = 1280;
+        "22";
+        scene.height = 620;
+        "24";
+        print("BST initialted");
+    };
+    if (!BST.prototype.__init__.__module__) Object.defineProperties(BST.prototype.__init__, {
+        __module__ : {value: "__main__"}
+    });
+    BST.__argnames__ = BST.prototype.__init__.__argnames__;
+    BST.__handles_kwarg_interpolation__ = BST.prototype.__init__.__handles_kwarg_interpolation__;
+    BST.prototype.add_item = async function add_item(value) {
+        var self = this;
+        var RS_ls, new_node, pointer, parent, insert_left;
+        "27";
+        (await rate(1.5));
+        "28";
+        if (self.root === null) {
+            "29";
+            new_node = RS_interpolate_kwargs.call(this, sphere, [RS_desugar_kwargs({pos: vector(0, 0, 0), radius: self.radius, color: color.cyan, value: value, left: null, right: null, parent: null})]);
+            "38";
+            self.node_list.append(new_node);
+            "40";
+            (RS_expr_temp = self.label_dict)[(typeof value === "number" && value["<"](0)) ? RS_expr_temp.length["+"](value) : value] = [RS_interpolate_kwargs.call(this, label, [RS_desugar_kwargs({pos: new_node.pos, text: value, color: color.black, height: self.font_size})]), 
+            null];
+            "47";
+            self.root = new_node;
+            "48";
+            return self.root;
+        }
+        "50";
+        pointer = self.root;
+        "51";
+        parent = null;
+        "52";
+        insert_left = null;
+        "54";
+        while (pointer) {
+            "55";
+            parent = pointer;
+            "56";
+            if (value["<"](pointer.value)) {
+                "57";
+                pointer = pointer.left;
+                "58";
+                insert_left = true;
+                "59";
+            } else if (value[">"](pointer.value)) {
+                "60";
+                pointer = pointer.right;
+                "61";
+                insert_left = false;
+                "63";
+            }
+        }
+        if (insert_left) {
+            "64";
+            new_node = RS_interpolate_kwargs.call(this, sphere, [RS_desugar_kwargs({pos: parent.pos["+"](vector(self.level_breadth["-u"](), self.level_hgt["-u"](), 0)), radius: self.radius, color: color.cyan, value: value, left: null, right: null, parent: parent})]);
+            "73";
+            self.node_list.append(new_node);
+            "74";
+            parent.left = new_node;
+            "75";
+        } else {
+            "76";
+            new_node = RS_interpolate_kwargs.call(this, sphere, [RS_desugar_kwargs({pos: parent.pos["+"](vector(self.level_breadth, self.level_hgt["-u"](), 0)), radius: self.radius, color: color.cyan, value: value, left: null, right: null, parent: parent})]);
+            "85";
+            self.node_list.append(new_node);
+            "86";
+            parent.right = new_node;
+        }
+        "88";
+        (RS_expr_temp = self.label_dict)[(typeof value === "number" && value["<"](0)) ? RS_expr_temp.length["+"](value) : value] = RS_list_decorate([ RS_interpolate_kwargs.call(this, label, [RS_desugar_kwargs({pos: new_node.pos, text: value, color: color.black, height: self.font_size})]), RS_interpolate_kwargs.call(this, arrow, [RS_desugar_kwargs({pos: parent.pos, axis: new_node.pos["-"](parent.pos), color: color.yellow})]) ]);
+        "95";
+        (await self.refactor());
+    };
+    if (!BST.prototype.add_item.__argnames__) Object.defineProperties(BST.prototype.add_item, {
+        __argnames__ : {value: ["value"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.search_item = async function search_item(node, value) {
+        var self = this;
+        "98";
+        if (node === null) {
+            "99";
+            return null;
+        }
+        "101";
+        node.color = color.magenta;
+        "102";
+        if ((await self.get_arrow(node))) {
+            "103";
+            (await self.get_arrow(node)).color = color.magenta;
+        }
+        "104";
+        (await sleep(1));
+        "105";
+        node.color = color.cyan;
+        "106";
+        if ((await self.get_arrow(node))) {
+            "107";
+            (await self.get_arrow(node)).color = color.yellow;
+            "109";
+        }
+        if ((node.value === value || typeof node.value === "object" && RS_equals(node.value, value))) {
+            "110";
+            node.color = color.green;
+            "111";
+            (await sleep(2));
+            "112";
+            node.color = color.cyan;
+            "114";
+            return node;
+            "116";
+        } else if (value["<"](node.value)) {
+            "117";
+            return (await self.search_item(node.left, value));
+            "118";
+        } else if (value[">"](node.value)) {
+            "119";
+            return (await self.search_item(node.right, value));
+        }
+    };
+    if (!BST.prototype.search_item.__argnames__) Object.defineProperties(BST.prototype.search_item, {
+        __argnames__ : {value: ["node", "value"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.remove_item = async function remove_item(value) {
+        var self = this;
+        var RS_ls, node, v, dt, t, to_return, next_inorder_value;
+        "122";
+        node = (await self.search_item(self.root, value));
+        "123";
+        if (node === null) {
+            "125";
+            return null;
+        }
+        "127";
+        node.color = color.red;
+        "129";
+        v = vector(0, 0, 5);
+        "130";
+        dt = .05;
+        "131";
+        t = 0;
+        "133";
+        if ((await self.is_leaf(node))) {
+            "134";
+            while (t["<"](3)) {
+                "135";
+                (await rate(1["/"](dt)));
+                "136";
+                node.pos=node.pos["+"](v["*"](dt));
+                "137";
+                (RS_expr_temp = self.label_dict)[RS_bound_index(node.value, RS_expr_temp)][0].pos = node.pos;
+                "138";
+                t=t["+"](dt);
+            }
+            "140";
+            (RS_expr_temp = self.label_dict)[RS_bound_index(node.value, RS_expr_temp)][0].visible = false;
+            "141";
+            (RS_expr_temp = self.label_dict)[RS_bound_index(node.value, RS_expr_temp)][1].visible = false;
+            "142";
+            node.visible = false;
+            "144";
+            if ((await self.is_left(node))) {
+                "145";
+                node.parent.left = null;
+                "146";
+            } else {
+                "147";
+                node.parent.right = null;
+            }
+            "149";
+            to_return = node;
+            "150";
+            RS_delitem(self.label_dict, node.value);
+            "151";
+            node = undefined;
+            "153";
+        } else if (RS_equals((await self.child_count(node)), 1)) {
+            "154";
+            while (t["<"](2)) {
+                "155";
+                (await rate(1["/"](dt)));
+                "156";
+                node.pos=node.pos["+"](v["*"](dt));
+                "157";
+                (RS_expr_temp = self.label_dict)[RS_bound_index(node.value, RS_expr_temp)][0].pos = node.pos;
+                "158";
+                t=t["+"](dt);
+            }
+            "160";
+            (RS_expr_temp = self.label_dict)[RS_bound_index(node.value, RS_expr_temp)][0].visible = false;
+            "161";
+            (RS_expr_temp = self.label_dict)[RS_bound_index(node.value, RS_expr_temp)][1].visible = false;
+            "162";
+            node.visible = false;
+            "164";
+            if ((await self.is_left(node))) {
+                "165";
+                if (node.right === null) {
+                    "166";
+                    (RS_expr_temp = self.label_dict)[RS_bound_index(node.left.value, RS_expr_temp)][1].pos = node.parent.pos;
+                    "167";
+                    (RS_expr_temp = self.label_dict)[RS_bound_index(node.left.value, RS_expr_temp)][1].axis = node.left.pos["-"](node.parent.pos);
+                    "170";
+                    node.parent.left = node.left;
+                    "171";
+                    node.left.parent = node.parent;
+                    "172";
+                } else {
+                    "173";
+                    (RS_expr_temp = self.label_dict)[RS_bound_index(node.right.value, RS_expr_temp)][1].pos = node.parent.pos;
+                    "174";
+                    (RS_expr_temp = self.label_dict)[RS_bound_index(node.right.value, RS_expr_temp)][1].axis = node.right.pos["-"](node.parent.pos);
+                    "177";
+                    node.parent.left = node.right;
+                    "178";
+                    node.right.parent = node.parent;
+                    "179";
+                }
+            } else {
+                "180";
+                if (node.right === null) {
+                    "181";
+                    (RS_expr_temp = self.label_dict)[RS_bound_index(node.left.value, RS_expr_temp)][1].pos = node.parent.pos;
+                    "182";
+                    (RS_expr_temp = self.label_dict)[RS_bound_index(node.left.value, RS_expr_temp)][1].axis = node.left.pos["-"](node.parent.pos);
+                    "185";
+                    node.parent.right = node.left;
+                    "186";
+                    node.left.parent = node.parent;
+                    "187";
+                } else {
+                    "188";
+                    (RS_expr_temp = self.label_dict)[RS_bound_index(node.right.value, RS_expr_temp)][1].pos = node.parent.pos;
+                    "189";
+                    (RS_expr_temp = self.label_dict)[RS_bound_index(node.right.value, RS_expr_temp)][1].axis = node.right.pos["-"](node.parent.pos);
+                    "192";
+                    node.parent.right = node.right;
+                    "193";
+                    node.right.parent = node.parent;
+                }
+            }
+            "195";
+            to_return = node;
+            "196";
+            RS_delitem(self.label_dict, node.value);
+            "197";
+            node = undefined;
+            "199";
+        } else {
+            "200";
+            next_inorder_value = (await self.get_next_inorder(node)).value;
+            "201";
+            to_return = (await self.remove_item(next_inorder_value));
+            "203";
+            (await self.get_label(node)).text = next_inorder_value;
+            "204";
+            (RS_expr_temp = self.label_dict)[(typeof next_inorder_value === "number" && next_inorder_value["<"](0)) ? RS_expr_temp.length["+"](next_inorder_value) : next_inorder_value] = (RS_expr_temp = self.label_dict)[RS_bound_index(node.value, RS_expr_temp)];
+            "205";
+            RS_delitem(self.label_dict, node.value);
+            "207";
+            node.value = next_inorder_value;
+        }
+        "210";
+        (await self.refactor());
+        "211";
+        return to_return;
+    };
+    if (!BST.prototype.remove_item.__argnames__) Object.defineProperties(BST.prototype.remove_item, {
+        __argnames__ : {value: ["value"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.refactor = async function refactor() {
+        var self = this;
+        var level_breadth = (arguments[0] === undefined || ( 0 === arguments.length["-"](1) && arguments[arguments.length["-"](1)] !== null && typeof arguments[arguments.length["-"](1)] === "object" && arguments[arguments.length["-"](1)] [RS_kwargs_symbol] === true)) ? refactor.__defaults__.level_breadth : arguments[0];
+        var level_hgt = (arguments[1] === undefined || ( 1 === arguments.length["-"](1) && arguments[arguments.length["-"](1)] !== null && typeof arguments[arguments.length["-"](1)] === "object" && arguments[arguments.length["-"](1)] [RS_kwargs_symbol] === true)) ? refactor.__defaults__.level_hgt : arguments[1];
+        var RS_kwargs_obj = arguments[arguments.length["-"](1)];
+        if (RS_kwargs_obj === null || typeof RS_kwargs_obj !== "object" || RS_kwargs_obj [RS_kwargs_symbol] !== true) RS_kwargs_obj = {};
+        if (Object.prototype.hasOwnProperty.call(RS_kwargs_obj, "level_breadth")){
+            level_breadth = RS_kwargs_obj.level_breadth;
+        }
+        if (Object.prototype.hasOwnProperty.call(RS_kwargs_obj, "level_hgt")){
+            level_hgt = RS_kwargs_obj.level_hgt;
+        }
+        var RS_ls, tree_depth, queue, last_ele, node, node_label, node_depth, node_arrow;
+        "214";
+        if (self.root === null) {
+            "215";
+            return;
+            "217";
+        }
+        if ((level_breadth === "default" || typeof level_breadth === "object" && RS_equals(level_breadth, "default"))) {
+            "218";
+            level_breadth = self.level_breadth;
+            "220";
+        }
+        if ((level_hgt === "default" || typeof level_hgt === "object" && RS_equals(level_hgt, "default"))) {
+            "221";
+            level_hgt = self.level_hgt;
+        }
+        "223";
+        tree_depth = (await self.get_height(self.root));
+        "225";
+        queue = RS_list_decorate([]);
+        "226";
+        queue.append(self.root);
+        "227";
+        last_ele = null;
+        "229";
+        while (len(queue)[">"](0)) {
+            "230";
+            node = queue.pop();
+            "231";
+            last_ele = node;
+            "232";
+            if (node.left) {
+                "233";
+                queue.append(node.left);
+                "234";
+            }
+            if (node.right) {
+                "235";
+                queue.append(node.right);
+                "237";
+            }
+            if (node === self.root) {
+                "238";
+                node.radius = Math.pow(1.5, tree_depth);
+                "239";
+                node_label = (await self.get_label(node));
+                "240";
+                node_label.height = max(Math.pow(1.5, tree_depth), 10);
+                "241";
+                continue;
+            }
+            "243";
+            node_depth = (await self.get_depth(node));
+            "244";
+            if ((await self.is_left(node))) {
+                "245";
+                node.pos = vector(node.parent.pos.x["-"](level_breadth["*"](Math.pow(1.5, (tree_depth["-"](node_depth)))))["-"](node.radius), node.parent.pos.y["-"](level_hgt["*"](Math.pow(1.5, (tree_depth["-"](node_depth))))), node.pos.z);
+                "252";
+            } else {
+                "253";
+                node.pos = vector(node.parent.pos.x["+"](level_breadth["*"](Math.pow(1.5, (tree_depth["-"](node_depth)))))["+"](node.radius), node.parent.pos.y["-"](level_hgt["*"](Math.pow(1.5, (tree_depth["-"](node_depth))))), node.pos.z);
+            }
+            "260";
+            node.radius = Math.pow(1.5, (tree_depth["-"](node_depth)));
+            "262";
+            node_label = (await self.get_label(node));
+            "263";
+            node_arrow = (await self.get_arrow(node));
+            "265";
+            node_label.pos = node.pos;
+            "266";
+            node_label.height = max(Math.pow(1.5, (tree_depth["-"](node_depth))), 10);
+            "268";
+            node_arrow.pos = node.parent.pos;
+            "269";
+            node_arrow.axis = node.pos["-"](node.parent.pos);
+            "271";
+        }
+        if (last_ele) {
+            "272";
+            scene.center = self.root.pos["+"](vector(0, last_ele.pos.y, 0));
+        }
+    };
+    if (!BST.prototype.refactor.__defaults__) Object.defineProperties(BST.prototype.refactor, {
+        __defaults__ : {value: {level_breadth:"default", level_hgt:"default"}},
+        __handles_kwarg_interpolation__ : {value: true},
+        __argnames__ : {value: ["level_breadth", "level_hgt"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.build_tree = async function build_tree(items) {
+        var self = this;
+        var RS_ls, mid;
+        "275";
+        mid = (await Math.floor(len(items)["/"](2)));
+        "276";
+        (await self.add_item(items[(typeof mid === "number" && mid["<"](0)) ? items.length["+"](mid) : mid]));
+        "278";
+        RS_delitem(items, mid);
+        "279";
+        if (len(items)[">"](1)) {
+            "280";
+            (await self.build_tree(items.slice(0, mid)));
+            "281";
+            (await self.build_tree(items.slice(mid, len(items)["+"](1))));
+            "282";
+        } else {
+            "283";
+            if (RS_equals(len(items), 1)) {
+                "284";
+                (await self.add_item(items[0]));
+            }
+        }
+    };
+    if (!BST.prototype.build_tree.__argnames__) Object.defineProperties(BST.prototype.build_tree, {
+        __argnames__ : {value: ["items"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.get_height = async function get_height() {
+        var self = this;
+        var node = (arguments[0] === undefined || ( 0 === arguments.length["-"](1) && arguments[arguments.length["-"](1)] !== null && typeof arguments[arguments.length["-"](1)] === "object" && arguments[arguments.length["-"](1)] [RS_kwargs_symbol] === true)) ? get_height.__defaults__.node : arguments[0];
+        var RS_kwargs_obj = arguments[arguments.length["-"](1)];
+        if (RS_kwargs_obj === null || typeof RS_kwargs_obj !== "object" || RS_kwargs_obj [RS_kwargs_symbol] !== true) RS_kwargs_obj = {};
+        if (Object.prototype.hasOwnProperty.call(RS_kwargs_obj, "node")){
+            node = RS_kwargs_obj.node;
+        }
+        "287";
+        if ((node === "root" || typeof node === "object" && RS_equals(node, "root"))) {
+            "288";
+            node = self.root;
+            "289";
+        }
+        if (node === null) {
+            "290";
+            return 0;
+            "291";
+        } else {
+            "292";
+            return 1["+"](max((await self.get_height(node.left)), (await self.get_height(node.right))));
+        }
+    };
+    if (!BST.prototype.get_height.__defaults__) Object.defineProperties(BST.prototype.get_height, {
+        __defaults__ : {value: {node:"root"}},
+        __handles_kwarg_interpolation__ : {value: true},
+        __argnames__ : {value: ["node"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.get_depth = async function get_depth(node) {
+        var self = this;
+        "295";
+        if ((node === self.root || typeof node === "object" && RS_equals(node, self.root))) {
+            "296";
+            return 0;
+            "297";
+        } else {
+            "298";
+            return 1["+"]((await self.get_depth(node.parent)));
+        }
+    };
+    if (!BST.prototype.get_depth.__argnames__) Object.defineProperties(BST.prototype.get_depth, {
+        __argnames__ : {value: ["node"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.preorderTraverse = async function preorderTraverse(v) {
+        var self = this;
+        var RS_ls, curnode;
+        "301";
+        curnode = v;
+        "302";
+        curnode.color = color.red;
+        "303";
+        RS_interpolate_kwargs.call(this, print, [curnode.value].concat([RS_desugar_kwargs({end: " "})]));
+        "304";
+        (await sleep(1));
+        "305";
+        if ((curnode.left !== null && (typeof curnode.left !== "object" || RS_not_equals(curnode.left, null)))) {
+            "306";
+            (await self.preorderTraverse(curnode.left));
+            "307";
+        }
+        if ((curnode.right !== null && (typeof curnode.right !== "object" || RS_not_equals(curnode.right, null)))) {
+            "308";
+            (await self.preorderTraverse(curnode.right));
+        }
+        "309";
+        return;
+    };
+    if (!BST.prototype.preorderTraverse.__argnames__) Object.defineProperties(BST.prototype.preorderTraverse, {
+        __argnames__ : {value: ["v"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.postorderTraverse = async function postorderTraverse(v) {
+        var self = this;
+        var RS_ls, curnode;
+        "312";
+        curnode = v;
+        "313";
+        curnode.color = color.magenta;
+        "314";
+        if ((curnode.left !== null && (typeof curnode.left !== "object" || RS_not_equals(curnode.left, null)))) {
+            "315";
+            (await sleep(1));
+            "316";
+            (await self.postorderTraverse(curnode.left));
+            "317";
+        }
+        if ((curnode.right !== null && (typeof curnode.right !== "object" || RS_not_equals(curnode.right, null)))) {
+            "318";
+            (await sleep(1));
+            "319";
+            (await self.postorderTraverse(curnode.right));
+        }
+        "320";
+        (await sleep(1));
+        "321";
+        curnode.color = color.red;
+        "322";
+        RS_interpolate_kwargs.call(this, print, [curnode.value].concat([RS_desugar_kwargs({end: " "})]));
+        "323";
+        return;
+    };
+    if (!BST.prototype.postorderTraverse.__argnames__) Object.defineProperties(BST.prototype.postorderTraverse, {
+        __argnames__ : {value: ["v"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.inorderTraverse = async function inorderTraverse(curnode) {
+        var self = this;
+        "327";
+        curnode.color = color.magenta;
+        "328";
+        if ((curnode.left !== null && (typeof curnode.left !== "object" || RS_not_equals(curnode.left, null)))) {
+            "329";
+            (await sleep(1));
+            "330";
+            (await self.inorderTraverse(curnode.left));
+        }
+        "331";
+        (await sleep(1));
+        "332";
+        curnode.color = color.red;
+        "333";
+        RS_interpolate_kwargs.call(this, print, [curnode.value].concat([RS_desugar_kwargs({end: " "})]));
+        "335";
+        if ((curnode.right !== null && (typeof curnode.right !== "object" || RS_not_equals(curnode.right, null)))) {
+            "336";
+            (await sleep(1));
+            "337";
+            (await self.inorderTraverse(curnode.right));
+        }
+        "338";
+        return;
+    };
+    if (!BST.prototype.inorderTraverse.__argnames__) Object.defineProperties(BST.prototype.inorderTraverse, {
+        __argnames__ : {value: ["curnode"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.get_next_inorder = async function get_next_inorder(node) {
+        var self = this;
+        var RS_ls, curr_node;
+        "341";
+        curr_node = node.right;
+        "342";
+        while (curr_node.left) {
+            "343";
+            curr_node = curr_node.left;
+        }
+        "345";
+        return curr_node;
+    };
+    if (!BST.prototype.get_next_inorder.__argnames__) Object.defineProperties(BST.prototype.get_next_inorder, {
+        __argnames__ : {value: ["node"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.add_items = async function add_items() {
+        var self = this;
+        var args = Array.prototype.slice.call(arguments, 0);
+        if (arguments[arguments.length["-"](1)] !== null && typeof arguments[arguments.length["-"](1)] === "object" && arguments[arguments.length["-"](1)] [RS_kwargs_symbol] === true) args.pop();
+        var RS_ls, value;
+        "348";
+        var RS_Iter0 = args;
+        RS_Iter0 = ((typeof RS_Iter0[Symbol.iterator] === "function") ? (RS_Iter0 instanceof Map ? RS_Iter0.keys() : RS_Iter0) : Object.keys(RS_Iter0));
+        for (var RS_Index0 of RS_Iter0) {
+            value = RS_Index0;
+            "349";
+            (await self.add_item(value));
+        }
+    };
+    if (!BST.prototype.add_items.__handles_kwarg_interpolation__) Object.defineProperties(BST.prototype.add_items, {
+        __handles_kwarg_interpolation__ : {value: true},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.is_leaf = async function is_leaf(node) {
+        var self = this;
+        "352";
+        return node.left === null && node.right === null;
+    };
+    if (!BST.prototype.is_leaf.__argnames__) Object.defineProperties(BST.prototype.is_leaf, {
+        __argnames__ : {value: ["node"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.is_left = async function is_left(node) {
+        var self = this;
+        "355";
+        return node === node.parent.left;
+    };
+    if (!BST.prototype.is_left.__argnames__) Object.defineProperties(BST.prototype.is_left, {
+        __argnames__ : {value: ["node"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.child_count = async function child_count(node) {
+        var self = this;
+        "358";
+        return (node.left === null) ? 0 : 1["+"]((node.right === null) ? 0 : 1);
+    };
+    if (!BST.prototype.child_count.__argnames__) Object.defineProperties(BST.prototype.child_count, {
+        __argnames__ : {value: ["node"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.get_label = async function get_label(node) {
+        var self = this;
+        "361";
+        return (RS_expr_temp = self.label_dict)[RS_bound_index(node.value, RS_expr_temp)][0];
+    };
+    if (!BST.prototype.get_label.__argnames__) Object.defineProperties(BST.prototype.get_label, {
+        __argnames__ : {value: ["node"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.get_arrow = async function get_arrow(node) {
+        var self = this;
+        "364";
+        return (RS_expr_temp = self.label_dict)[RS_bound_index(node.value, RS_expr_temp)][1];
+    };
+    if (!BST.prototype.get_arrow.__argnames__) Object.defineProperties(BST.prototype.get_arrow, {
+        __argnames__ : {value: ["node"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.change_color = async function change_color() {
+        var self = this;
+        var RS_ls, i;
+        "367";
+        var RS_Iter1 = self.node_list;
+        RS_Iter1 = ((typeof RS_Iter1[Symbol.iterator] === "function") ? (RS_Iter1 instanceof Map ? RS_Iter1.keys() : RS_Iter1) : Object.keys(RS_Iter1));
+        for (var RS_Index1 of RS_Iter1) {
+            i = RS_Index1;
+            "368";
+            i.color = color.cyan;
+        }
+    };
+    if (!BST.prototype.change_color.__module__) Object.defineProperties(BST.prototype.change_color, {
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.get_value = async function get_value(node) {
+        var self = this;
+        "371";
+        return node.value;
+    };
+    if (!BST.prototype.get_value.__argnames__) Object.defineProperties(BST.prototype.get_value, {
+        __argnames__ : {value: ["node"]},
+        __module__ : {value: "__main__"}
+    });
+    BST.prototype.__repr__ = async function __repr__() {
+                return "<"["+"](__name__)["+"](".")["+"](this.constructor.name)["+"](" #")["+"](this.RS_object_id)["+"](">");
+    };
+    BST.prototype.__str__ = async function __str__() {
+        return (await this.__repr__());
+    };
+    Object.defineProperty(BST.prototype, "__bases__", {value: []});
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    "374";
+    inp_str = "";
+    "375";
+    win = null;
+    "377";
+    async function bind_fn(obj) {
+        "378";
+        "379";
+        inp_str = obj.text;
+        "380";
+        win.remove();
+    };
+    if (!bind_fn.__argnames__) Object.defineProperties(bind_fn, {
+        __argnames__ : {value: ["obj"]},
+        __module__ : {value: "__main__"}
+    });
+
+    "383";
+    async function get_input() {
+        var prompt_text = (arguments[0] === undefined || ( 0 === arguments.length["-"](1) && arguments[arguments.length["-"](1)] !== null && typeof arguments[arguments.length["-"](1)] === "object" && arguments[arguments.length["-"](1)] [RS_kwargs_symbol] === true)) ? get_input.__defaults__.prompt_text : arguments[0];
+        var RS_kwargs_obj = arguments[arguments.length["-"](1)];
+        if (RS_kwargs_obj === null || typeof RS_kwargs_obj !== "object" || RS_kwargs_obj [RS_kwargs_symbol] !== true) RS_kwargs_obj = {};
+        if (Object.prototype.hasOwnProperty.call(RS_kwargs_obj, "prompt_text")){
+            prompt_text = RS_kwargs_obj.prompt_text;
+        }
+        "384";
+        "385";
+        inp_str = "";
+        (await sleep(.1));
+        "386";
+        win = RS_interpolate_kwargs.call(this, winput, [RS_desugar_kwargs({prompt: prompt_text, type: "string", bind: bind_fn})]);
+    };
+    if (!get_input.__defaults__) Object.defineProperties(get_input, {
+        __defaults__ : {value: {prompt_text:""}},
+        __handles_kwarg_interpolation__ : {value: true},
+        __argnames__ : {value: ["prompt_text"]},
+        __module__ : {value: "__main__"}
+    });
+
+    "389";
+    async function wait_for_input() {
+        "390";
+        "391";
+        while ((inp_str === "" || typeof inp_str === "object" && RS_equals(inp_str, ""))) {
+            "392";
+            (await rate(100));
+        }
+    };
+    if (!wait_for_input.__module__) Object.defineProperties(wait_for_input, {
+        __module__ : {value: "__main__"}
+    });
+
+    "394";
+    async function main() {
+        var RS_ls, _GS_1, bst, arr, inputs, w, val, node, node_list_vals;
+        "395";
+        "396";
+        _GS_1 = new BST;
+        (await _GS_1.__init__());
+        bst = _GS_1;
+        "398";
+        (await get_input("Enter elements to build a Binary Search tree: "));
+        "399";
+        (await wait_for_input());
+        "401";
+        arr = list((await set((await map(int, (await inp_str.split(" ")))))));
+        "402";
+        (await arr.pysort());
+        "403";
+        (await bst.build_tree(arr));
+        "405";
+        while (true) {
+            "406";
+            (await get_input("Enter operation: "));
+            "407";
+            (await wait_for_input());
+            "409";
+            inputs = (await inp_str.split(" "));
+            "410";
+            if ((inputs[0] === "inord" || typeof inputs[0] === "object" && RS_equals(inputs[0], "inord"))) {
+                "411";
+                w = RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({text: "<h1>Inorder Traversal<\/h1>", pos: scene.title_anchor})]);
+                "412";
+                print("Inorder Traversal :");
+                "413";
+                (await bst.inorderTraverse(bst.root));
+                "414";
+                (await bst.change_color());
+                "415";
+                print();
+                "416";
+                w.remove();
+                "417";
+            } else if ((inputs[0] === "preord" || typeof inputs[0] === "object" && RS_equals(inputs[0], "preord"))) {
+                "418";
+                w = RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({text: "<h1>Preorder Traversal</h1>", pos: scene.title_anchor})]);
+                "419";
+                print("Preorder Traversal :");
+                "420";
+                (await bst.preorderTraverse(bst.root));
+                "421";
+                (await bst.change_color());
+                "422";
+                print();
+                "423";
+                w.remove();
+                "424";
+            } else if ((inputs[0] === "postord" || typeof inputs[0] === "object" && RS_equals(inputs[0], "postord"))) {
+                "425";
+                w = RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({text: "<h1>Postorder Traversal</h1>", pos: scene.title_anchor})]);
+                "426";
+                print("Postorder Traversal :");
+                "427";
+                (await bst.postorderTraverse(bst.root));
+                "428";
+                (await bst.change_color());
+                "429";
+                print();
+                "430";
+                w.remove();
+                "431";
+            } else if ((inputs[0] === "S" || typeof inputs[0] === "object" && RS_equals(inputs[0], "S"))) {
+                "432";
+                w = RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({text: "<h1>Search</h1>", pos: scene.title_anchor})]);
+                "433";
+                val = int(inputs[1]);
+                "434";
+                node = (await bst.search_item(bst.root, val));
+                "435";
+                if (node === null) {
+                    "436";
+                    print(""["+"](RS_str.format("{}", val))["+"](" is not present"));
+                    "437";
+                } else {
+                    "438";
+                    print(""["+"](RS_str.format("{}", node.value))["+"](" found!!"));
+                }
+                "439";
+                w.remove();
+                "440";
+            } else if ((inputs[0] === "I" || typeof inputs[0] === "object" && RS_equals(inputs[0], "I"))) {
+                "441";
+                w = RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({text: "<h1>Insertion</h1>", pos: scene.title_anchor})]);
+                "442";
+                val = int(inputs[1]);
+                "443";
+                node_list_vals = (function() {
+                    var RS_Iter = bst.node_list, RS_Result = [], node;
+                    RS_Iter = ((typeof RS_Iter[Symbol.iterator] === "function") ? (RS_Iter instanceof Map ? RS_Iter.keys() : RS_Iter) : Object.keys(RS_Iter));
+                    for (var RS_Index of RS_Iter) {
+                        node = RS_Index;
+                        RS_Result.push(node.value);
+                    }
+                    RS_Result = RS_list_constructor(RS_Result);
+                    return RS_Result;
+                })();
+                "444";
+                while (RS_in(val, node_list_vals)) {
+                    "445";
+                    (await get_input("Enter a value not present in the tree: "));
+                    "446";
+                    (await wait_for_input());
+                    "447";
+                    val = int(inp_str);
+                }
+                "448";
+                (await bst.search_item(bst.root, val));
+                "449";
+                (await bst.add_item(val));
+                "450";
+                print();
+                "451";
+                w.remove();
+                "452";
+            } else if ((inputs[0] === "D" || typeof inputs[0] === "object" && RS_equals(inputs[0], "D"))) {
+                "453";
+                w = RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({text: "<h1>Deletion</h1>", pos: scene.title_anchor})]);
+                "454";
+                val = int(inputs[1]);
+                "455";
+                node = (await bst.remove_item(val));
+                "456";
+                if (node === null) {
+                    "457";
+                    print(""["+"](RS_str.format("{}", val))["+"](" is not present"));
+                    "458";
+                } else {
+                    "459";
+                    print(""["+"](RS_str.format("{}", val))["+"](" deleted"));
+                }
+                "460";
+                print();
+                "461";
+                w.remove();
+                "463";
+            } else if ((inputs[0] === "X" || typeof inputs[0] === "object" && RS_equals(inputs[0], "X"))) {
+                "464";
+                break;
+            }
+        }
+        "466";
+        print("Program Terminated");
+        "470";
+    };
+    if (!main.__module__) Object.defineProperties(main, {
+        __module__ : {value: "__main__"}
+    });
+
+    if ((__name__ === "__main__" || typeof __name__ === "object" && RS_equals(__name__, "__main__"))) {
+        "471";
+        (await main());
+    }
+};
+if (!__main__.__module__) Object.defineProperties(__main__, {
+    __module__ : {value: "__main__"}
+});
+
+;$(function(){ window.__context = { glowscript_container: $("#glowscript").removeAttr("id") }; __main__() })})()
+// END JAVASCRIPT
+
+//--><!]]></script>
+</div>

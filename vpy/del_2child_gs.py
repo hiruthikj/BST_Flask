@@ -224,8 +224,11 @@ class BST:
 
         queue = []
         queue.append(self.root)
+        last_ele = None
+
         while len(queue) > 0:
             node = queue.pop()
+            last_ele = node
             if node.left:
                 queue.append(node.left)
             if node.right:
@@ -264,6 +267,9 @@ class BST:
 
             node_arrow.pos = node.parent.pos
             node_arrow.axis = node.pos - node.parent.pos
+
+        if last_ele:
+            scene.center = self.root.pos + vector(0, last_ele.pos.y, 0)
 
     def build_tree(self, items):
         mid = len(items) // 2
