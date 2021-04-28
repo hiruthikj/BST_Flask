@@ -127,39 +127,46 @@ class BST:
         self.refactor2()
         print("adding ", value)
 
-    def search_item(self, node, value):
+    def search_item(self, node, value, show_animation=True):
         if node is None:
             return None
 
-        node.color = color.magenta
-        if self.get_arrow(node):
-            self.get_arrow(node).color = color.magenta
-        sleep(1)
-        node.color = color.cyan
-        if self.get_arrow(node):
-            self.get_arrow(node).color = color.yellow
+        if show_animation:
+            node.color = color.magenta
+            if self.get_arrow(node):
+                self.get_arrow(node).color = color.magenta
+            sleep(1)
+            node.color = color.cyan
+            if self.get_arrow(node):
+                self.get_arrow(node).color = color.yellow
 
         if node.value == value:
-            node.color = color.green
-            sleep(2)
-            node.color = color.cyan
-
+            if show_animation:
+                node.color = color.green
+                sleep(2)
+                node.color = color.cyan
             return node
 
         elif value < node.value:
-            return self.search_item(node.left, value)
+            return self.search_item(node.left, value, show_animation)
         elif value > node.value:
-            return self.search_item(node.right, value)
+            return self.search_item(node.right, value, show_animation)
 
     def remove_item(self, value):
+        if len(self.node_list) == 1:
+            to_return = self.root
+            self.root = None
+            self.label_dict = {}
+            self.node_list = []
+            return to_return
+
         node = self.search_item(self.root, value)
         if node is None:
-            # print(f"Item {value} doesn't exist")
             return None
 
         node.color = color.red
 
-        v = vector(0, 0, 5)  # + self.label_dict[node.value][1].axis
+        v = vector(0, 0, 5)
         dt = 0.05
         t = 0
 
@@ -181,6 +188,15 @@ class BST:
 
             to_return = node
             del self.label_dict[node.value]
+
+            # print(self.node_list)
+            # for i in range(len(self.node_list)):
+            #     temp_node = self.node_list[i]
+            #     print(temp_node)
+            #     print(temp_node.value)
+            #     if temp_node.value == value:
+            #         self.node_list.pop(i)
+
             del node
 
         elif self.child_count(node) == 1:
@@ -193,6 +209,14 @@ class BST:
             self.label_dict[node.value][0].visible = False
             self.label_dict[node.value][1].visible = False
             node.visible = False
+
+            if node is self.root:
+                self.root = node.left if node.right is None else node.left
+                self.root.parent = None
+
+                to_return = node
+                del node
+                return to_return
 
             if self.is_left(node):
                 if node.right is None:
@@ -226,7 +250,14 @@ class BST:
                     node.right.parent = node.parent
 
             to_return = node
+
             del self.label_dict[node.value]
+            # for i in range(len(self.node_list)):
+            #     temp_node = self.node_list[i]
+            #     print(temp_node.value)
+            #     if temp_node.value == value:
+            #         self.node_list.pop(i)
+
             del node
 
         else:
@@ -247,7 +278,22 @@ class BST:
     def refactor2(self):
         if self.root is None:
             return
-        
+
+        to_remove = []
+        for i in range(len(self.node_list)):
+            if self.node_list[i] != self.search_item(self.root, self.node_list[i].value, False):
+                to_remove.append(self.node_list[i].value)
+
+        # print(self.node_list)
+        # print([node.value for node in self.node_list])
+
+        for (i, node) in enumerate(self.node_list):
+            temp_node = self.node_list[i]
+            # print("dir: ", dir(temp_node))
+            if temp_node.value in to_remove:
+                self.node_list.pop(i)
+            
+
         n = len(self.node_list)
         
         root_idx = 0
@@ -255,33 +301,29 @@ class BST:
             if self.node_list[i] == self.root:
                 root_idx = i
                 break
-        
-        # print([node.value for node in self.node_list]) 
-        
+
         self.root.pos = vector(0,0,0)
 
         count = 1
         for i in range(root_idx + 1, n):
             node = self.node_list[i]
-            node.pos = vector( count * self.level_breadth, node.pos.y , node.pos.z)
-            self.get_arrow(node).pos = node.parent.pos
-            self.get_arrow(node).axis = node.pos - node.parent.pos
-            self.get_label(node).pos = node.pos
-
+            node.pos = vector( count * self.level_breadth, -self.get_depth(node) * self.level_hgt , 0)
             count += 1
-            # print(node.value)
 
         count = 1
         for i in range(root_idx - 1, -1, -1):
             node = self.node_list[i]
-            node.pos = vector( -count * self.level_breadth, node.pos.y , node.pos.z)
-            self.get_arrow(node).pos = node.parent.pos
-            self.get_arrow(node).axis = node.pos - node.parent.pos
-            self.get_label(node).pos = node.pos
-
+            node.pos = vector( -count * self.level_breadth, -self.get_depth(node) * self.level_hgt , 0)
             count += 1
-            # print(node.value)
 
+        for i in range(n):
+            node = self.node_list[i]
+            self.get_label(node).pos = node.pos
+            
+            if node is not self.root:
+                self.get_arrow(node).pos = node.parent.pos
+                self.get_arrow(node).axis = node.pos - node.parent.pos
+            
 
 
     def refactor(self, level_breadth="default", level_hgt="default"):
@@ -348,15 +390,14 @@ class BST:
     def build_tree(self, items):
         mid = len(items) // 2
         self.add_item(items[mid])
-        # self.search_item(self.root,items[mid])
         del items[mid]
+
         if len(items) > 1:
             self.build_tree(items[0:mid])
             self.build_tree(items[mid : len(items) + 1])
         else:
             if len(items) == 1:
                 self.add_item(items[0])
-        # self.refactor2()
 
     def get_height(self, node="root"):
         if node == "root":
@@ -465,6 +506,7 @@ def wait_for_input():
     global inp_str
     while inp_str == "":
         rate(100)
+
 
 def main():
     global inp_str, win
