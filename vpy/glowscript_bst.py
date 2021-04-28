@@ -1,4 +1,4 @@
-GlowScript 3.0 VPython
+GlowScript 3.1 VPython
 # from time import sleep
 # from vpython import *
 
@@ -35,7 +35,18 @@ class BST:
                 right=None,
                 parent=None
             )
-            self.node_list.append(new_node)
+
+            inserted = False
+            for i in range(len(self.node_list)):
+                curr_node = self.node_list[i]
+                if new_node.value < curr_node.value:
+                    self.node_list.insert(i, new_node)
+                    inserted = True
+                    break
+            if not inserted:
+                self.node_list.append(new_node)
+
+            # self.node_list.append(new_node)
 
             self.label_dict[value] = (
                 label(
@@ -70,7 +81,17 @@ class BST:
                 right=None,
                 parent=parent
             )
-            self.node_list.append(new_node)
+            inserted = False
+            for i in range(len(self.node_list)):
+                curr_node = self.node_list[i]
+                if new_node.value < curr_node.value:
+                    self.node_list.insert(i, new_node)
+                    inserted = True
+                    break
+            if not inserted:
+                self.node_list.append(new_node)
+
+            # self.node_list.append(new_node)
             parent.left = new_node
         else:
             new_node = sphere(
@@ -82,7 +103,17 @@ class BST:
                 right=None,
                 parent=parent
             )
-            self.node_list.append(new_node)
+            inserted = False
+            for i in range(len(self.node_list)):
+                curr_node = self.node_list[i]
+                if new_node.value < curr_node.value:
+                    self.node_list.insert(i, new_node)
+                    inserted = True
+                    break
+            if not inserted:
+                self.node_list.append(new_node)
+
+            # self.node_list.append(new_node)
             parent.right = new_node
 
         self.label_dict[value] = [
@@ -92,7 +123,9 @@ class BST:
             arrow(pos=parent.pos, axis=new_node.pos - parent.pos, color=color.yellow)
         ]
 
-        self.refactor()
+        # self.refactor()
+        self.refactor2()
+        print("adding ", value)
 
     def search_item(self, node, value):
         if node is None:
@@ -207,8 +240,49 @@ class BST:
             node.value = next_inorder_value
 
     
-        self.refactor()
+        # self.refactor()
+        self.refactor2()
         return to_return
+
+    def refactor2(self):
+        if self.root is None:
+            return
+        
+        n = len(self.node_list)
+        
+        root_idx = 0
+        for i in range(len(self.node_list)):
+            if self.node_list[i] == self.root:
+                root_idx = i
+                break
+        
+        # print([node.value for node in self.node_list]) 
+        
+        self.root.pos = vector(0,0,0)
+
+        count = 1
+        for i in range(root_idx + 1, n):
+            node = self.node_list[i]
+            node.pos = vector( count * self.level_breadth, node.pos.y , node.pos.z)
+            self.get_arrow(node).pos = node.parent.pos
+            self.get_arrow(node).axis = node.pos - node.parent.pos
+            self.get_label(node).pos = node.pos
+
+            count += 1
+            # print(node.value)
+
+        count = 1
+        for i in range(root_idx - 1, -1, -1):
+            node = self.node_list[i]
+            node.pos = vector( -count * self.level_breadth, node.pos.y , node.pos.z)
+            self.get_arrow(node).pos = node.parent.pos
+            self.get_arrow(node).axis = node.pos - node.parent.pos
+            self.get_label(node).pos = node.pos
+
+            count += 1
+            # print(node.value)
+
+
 
     def refactor(self, level_breadth="default", level_hgt="default"):
         if self.root is None:
@@ -282,6 +356,7 @@ class BST:
         else:
             if len(items) == 1:
                 self.add_item(items[0])
+        # self.refactor2()
 
     def get_height(self, node="root"):
         if node == "root":
