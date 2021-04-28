@@ -90,7 +90,7 @@ async function __main__() {
         "21";
         scene.width = 1280;
         "22";
-        scene.height = 620;
+        scene.height = 500;
         "24";
         print("BST initialted");
     };
@@ -301,7 +301,7 @@ async function __main__() {
     });
     BST.prototype.remove_item = async function remove_item(value) {
         var self = this;
-        var ρσ_ls, to_return, node, v, dt, t, next_inorder_value;
+        var ρσ_ls, to_return, node, v, dt, t, label_, child_, arr_, next_inorder_value;
         "156";
         if (ρσ_equals(len(self.node_list), 1)) {
             "157";
@@ -376,51 +376,44 @@ async function __main__() {
                 (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)][0].pos = node.pos;
                 "207";
                 t=t["+"](dt);
+                "211";
             }
-            "209";
-            (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)][0].visible = false;
-            "210";
-            (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)][1].visible = false;
-            "211";
-            node.visible = false;
-            "213";
             if (node === self.root) {
+                "212";
+                label_ = (await self.get_label(node));
+                "213";
+                label_.visible = false;
                 "214";
-                self.root = (node.right === null) ? node.left : node.left;
-                "215";
-                self.root.parent = null;
+                ρσ_delitem(self.label_dict, node.value);
+                "216";
+                child_ = (node.right === null) ? node.left : node.left;
                 "217";
-                to_return = node;
+                arr_ = (await self.get_arrow(child_));
                 "218";
-                node = undefined;
-                "219";
-                return to_return;
+                arr_.visible = false;
+                "220";
+                self.root.parent = null;
                 "221";
+                self.root = child_;
+                "223";
+                to_return = node;
+                "224";
+                node.visible = false;
+                "225";
+                node = undefined;
+                "227";
+                (await self.refactor2());
+                "228";
+                return to_return;
             }
+            "230";
+            (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)][0].visible = false;
+            "231";
+            (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)][1].visible = false;
+            "232";
+            node.visible = false;
+            "236";
             if ((await self.is_left(node))) {
-                "222";
-                if (node.right === null) {
-                    "223";
-                    (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.left.value, ρσ_expr_temp)][1].pos = node.parent.pos;
-                    "224";
-                    (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.left.value, ρσ_expr_temp)][1].axis = node.left.pos["-"](node.parent.pos);
-                    "227";
-                    node.parent.left = node.left;
-                    "228";
-                    node.left.parent = node.parent;
-                    "229";
-                } else {
-                    "230";
-                    (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.right.value, ρσ_expr_temp)][1].pos = node.parent.pos;
-                    "231";
-                    (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.right.value, ρσ_expr_temp)][1].axis = node.right.pos["-"](node.parent.pos);
-                    "234";
-                    node.parent.left = node.right;
-                    "235";
-                    node.right.parent = node.parent;
-                    "236";
-                }
-            } else {
                 "237";
                 if (node.right === null) {
                     "238";
@@ -428,7 +421,7 @@ async function __main__() {
                     "239";
                     (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.left.value, ρσ_expr_temp)][1].axis = node.left.pos["-"](node.parent.pos);
                     "242";
-                    node.parent.right = node.left;
+                    node.parent.left = node.left;
                     "243";
                     node.left.parent = node.parent;
                     "244";
@@ -438,35 +431,58 @@ async function __main__() {
                     "246";
                     (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.right.value, ρσ_expr_temp)][1].axis = node.right.pos["-"](node.parent.pos);
                     "249";
-                    node.parent.right = node.right;
+                    node.parent.left = node.right;
                     "250";
+                    node.right.parent = node.parent;
+                    "251";
+                }
+            } else {
+                "252";
+                if (node.right === null) {
+                    "253";
+                    (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.left.value, ρσ_expr_temp)][1].pos = node.parent.pos;
+                    "254";
+                    (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.left.value, ρσ_expr_temp)][1].axis = node.left.pos["-"](node.parent.pos);
+                    "257";
+                    node.parent.right = node.left;
+                    "258";
+                    node.left.parent = node.parent;
+                    "259";
+                } else {
+                    "260";
+                    (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.right.value, ρσ_expr_temp)][1].pos = node.parent.pos;
+                    "261";
+                    (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.right.value, ρσ_expr_temp)][1].axis = node.right.pos["-"](node.parent.pos);
+                    "264";
+                    node.parent.right = node.right;
+                    "265";
                     node.right.parent = node.parent;
                 }
             }
-            "252";
-            to_return = node;
-            "254";
-            ρσ_delitem(self.label_dict, node.value);
-            "261";
-            node = undefined;
-            "263";
-        } else {
-            "264";
-            next_inorder_value = (await self.get_next_inorder(node)).value;
-            "265";
-            to_return = (await self.remove_item(next_inorder_value));
             "267";
-            (await self.get_label(node)).text = next_inorder_value;
-            "268";
-            (ρσ_expr_temp = self.label_dict)[(typeof next_inorder_value === "number" && next_inorder_value["<"](0)) ? ρσ_expr_temp.length["+"](next_inorder_value) : next_inorder_value] = (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)];
+            to_return = node;
             "269";
             ρσ_delitem(self.label_dict, node.value);
-            "271";
+            "276";
+            node = undefined;
+            "278";
+        } else {
+            "279";
+            next_inorder_value = (await self.get_next_inorder(node)).value;
+            "280";
+            to_return = (await self.remove_item(next_inorder_value));
+            "282";
+            (await self.get_label(node)).text = next_inorder_value;
+            "283";
+            (ρσ_expr_temp = self.label_dict)[(typeof next_inorder_value === "number" && next_inorder_value["<"](0)) ? ρσ_expr_temp.length["+"](next_inorder_value) : next_inorder_value] = (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)];
+            "284";
+            ρσ_delitem(self.label_dict, node.value);
+            "286";
             node.value = next_inorder_value;
         }
-        "275";
+        "290";
         (await self.refactor2());
-        "276";
+        "291";
         return to_return;
     };
     if (!BST.prototype.remove_item.__argnames__) Object.defineProperties(BST.prototype.remove_item, {
@@ -476,94 +492,104 @@ async function __main__() {
     BST.prototype.refactor2 = async function refactor2() {
         var self = this;
         var ρσ_ls, to_remove, i, temp_node, ρσ_unpack, node, n, root_idx, count;
-        "279";
+        "294";
         if (self.root === null) {
-            "280";
+            "295";
             return;
         }
-        "282";
+        "297";
         to_remove = ρσ_list_decorate([]);
-        "283";
+        "298";
         var ρσ_Iter4 = range(len(self.node_list));
         ρσ_Iter4 = ((typeof ρσ_Iter4[Symbol.iterator] === "function") ? (ρσ_Iter4 instanceof Map ? ρσ_Iter4.keys() : ρσ_Iter4) : Object.keys(ρσ_Iter4));
         for (var ρσ_Index4 of ρσ_Iter4) {
             i = ρσ_Index4;
-            "284";
+            "299";
             if (ρσ_not_equals((ρσ_expr_temp = self.node_list)[(typeof i === "number" && i["<"](0)) ? ρσ_expr_temp.length["+"](i) : i], (await self.search_item(self.root, (ρσ_expr_temp = self.node_list)[(typeof i === "number" && i["<"](0)) ? ρσ_expr_temp.length["+"](i) : i].value, false)))) {
-                "285";
+                "300";
                 to_remove.append((ρσ_expr_temp = self.node_list)[(typeof i === "number" && i["<"](0)) ? ρσ_expr_temp.length["+"](i) : i].value);
             }
         }
-        "290";
+        "302";
         var ρσ_Iter5 = enumerate(self.node_list);
         ρσ_Iter5 = ((typeof ρσ_Iter5[Symbol.iterator] === "function") ? (ρσ_Iter5 instanceof Map ? ρσ_Iter5.keys() : ρσ_Iter5) : Object.keys(ρσ_Iter5));
         for (var ρσ_Index5 of ρσ_Iter5) {
             ρσ_unpack = ρσ_Index5;
             i = ρσ_unpack[0];
             node = ρσ_unpack[1];
-            "291";
+            "303";
             temp_node = (ρσ_expr_temp = self.node_list)[(typeof i === "number" && i["<"](0)) ? ρσ_expr_temp.length["+"](i) : i];
-            "293";
+            "305";
             if (ρσ_in(temp_node.value, to_remove)) {
-                "294";
-                self.node_list.pypop(i);
+                "306";
+                try {
+                    "307";
+                    self.node_list = self.node_list.slice(0, i)["+"](self.node_list.slice(i["+"](1)));
+                    "308";
+                } catch (ρσ_Exception) {
+                    ρσ_last_exception = ρσ_Exception;
+                    {
+                        "309";
+                        self.node_list.pypop(i);
+                    } 
+                }
             }
         }
-        "297";
+        "311";
         n = len(self.node_list);
-        "299";
+        "313";
         root_idx = 0;
-        "300";
+        "314";
         var ρσ_Iter6 = range(len(self.node_list));
         ρσ_Iter6 = ((typeof ρσ_Iter6[Symbol.iterator] === "function") ? (ρσ_Iter6 instanceof Map ? ρσ_Iter6.keys() : ρσ_Iter6) : Object.keys(ρσ_Iter6));
         for (var ρσ_Index6 of ρσ_Iter6) {
             i = ρσ_Index6;
-            "301";
+            "315";
             if (((ρσ_expr_temp = self.node_list)[(typeof i === "number" && i["<"](0)) ? ρσ_expr_temp.length["+"](i) : i] === self.root || (await typeof (ρσ_expr_temp = self.node_list))[(typeof i === "number" && i["<"](0)) ? ρσ_expr_temp.length["+"](i) : i] === "object" && ρσ_equals((ρσ_expr_temp = self.node_list)[(typeof i === "number" && i["<"](0)) ? ρσ_expr_temp.length["+"](i) : i], self.root))) {
-                "302";
+                "316";
                 root_idx = i;
-                "303";
+                "317";
                 break;
             }
         }
-        "305";
+        "319";
         self.root.pos = vector(0, 0, 0);
-        "307";
+        "321";
         count = 1;
-        "308";
+        "322";
         for (var ρσ_Index7 = root_idx["+"](1); ρσ_Index7["<"](n); ρσ_Index7++) {
             i = ρσ_Index7;
-            "309";
+            "323";
             node = (ρσ_expr_temp = self.node_list)[(typeof i === "number" && i["<"](0)) ? ρσ_expr_temp.length["+"](i) : i];
-            "310";
+            "324";
             node.pos = vector(count["*"](self.level_breadth), (await self.get_depth(node))["-u"]()["*"](self.level_hgt), 0);
-            "311";
+            "325";
             count=count["+"](1);
         }
-        "313";
+        "327";
         count = 1;
-        "314";
+        "328";
         for (var ρσ_Index8 = root_idx["-"](1); ρσ_Index8[">"](1["-u"]()); ρσ_Index8=ρσ_Index8["-"](1)) {
             i = ρσ_Index8;
-            "315";
+            "329";
             node = (ρσ_expr_temp = self.node_list)[(typeof i === "number" && i["<"](0)) ? ρσ_expr_temp.length["+"](i) : i];
-            "316";
+            "330";
             node.pos = vector(count["-u"]()["*"](self.level_breadth), (await self.get_depth(node))["-u"]()["*"](self.level_hgt), 0);
-            "317";
+            "331";
             count=count["+"](1);
         }
-        "319";
+        "333";
         for (var ρσ_Index9 = 0; ρσ_Index9["<"](n); ρσ_Index9++) {
             i = ρσ_Index9;
-            "320";
+            "334";
             node = (ρσ_expr_temp = self.node_list)[(typeof i === "number" && i["<"](0)) ? ρσ_expr_temp.length["+"](i) : i];
-            "321";
+            "335";
             (await self.get_label(node)).pos = node.pos;
-            "323";
+            "337";
             if (node !== self.root) {
-                "324";
+                "338";
                 (await self.get_arrow(node)).pos = node.parent.pos;
-                "325";
+                "339";
                 (await self.get_arrow(node)).axis = node.pos["-"](node.parent.pos);
             }
         }
@@ -584,85 +610,85 @@ async function __main__() {
             level_hgt = ρσ_kwargs_obj.level_hgt;
         }
         var ρσ_ls, tree_depth, queue, last_ele, node, node_label, node_depth, node_arrow;
-        "330";
+        "344";
         if (self.root === null) {
-            "331";
+            "345";
             return;
-            "333";
+            "347";
         }
         if ((level_breadth === "default" || typeof level_breadth === "object" && ρσ_equals(level_breadth, "default"))) {
-            "334";
+            "348";
             level_breadth = self.level_breadth;
-            "336";
+            "350";
         }
         if ((level_hgt === "default" || typeof level_hgt === "object" && ρσ_equals(level_hgt, "default"))) {
-            "337";
+            "351";
             level_hgt = self.level_hgt;
         }
-        "339";
+        "353";
         tree_depth = (await self.get_height(self.root));
-        "341";
+        "355";
         queue = ρσ_list_decorate([]);
-        "342";
+        "356";
         queue.append(self.root);
-        "343";
+        "357";
         last_ele = null;
-        "345";
+        "359";
         while (len(queue)[">"](0)) {
-            "346";
+            "360";
             node = queue.pop();
-            "347";
+            "361";
             last_ele = node;
-            "348";
+            "362";
             if (node.left) {
-                "349";
+                "363";
                 queue.append(node.left);
-                "350";
+                "364";
             }
             if (node.right) {
-                "351";
+                "365";
                 queue.append(node.right);
-                "353";
+                "367";
             }
             if (node === self.root) {
-                "354";
+                "368";
                 node.radius = Math.pow(1.5, tree_depth);
-                "355";
+                "369";
                 node_label = (await self.get_label(node));
-                "356";
+                "370";
                 node_label.height = max(Math.pow(1.5, tree_depth), 10);
-                "357";
+                "371";
                 continue;
             }
-            "359";
+            "373";
             node_depth = (await self.get_depth(node));
-            "360";
+            "374";
             if ((await self.is_left(node))) {
-                "361";
+                "375";
                 node.pos = vector(node.parent.pos.x["-"](level_breadth["*"](Math.pow(1.5, (tree_depth["-"](node_depth)))))["-"](node.radius), node.parent.pos.y["-"](level_hgt["*"](Math.pow(1.5, (tree_depth["-"](node_depth))))), node.pos.z);
-                "368";
+                "382";
             } else {
-                "369";
+                "383";
                 node.pos = vector(node.parent.pos.x["+"](level_breadth["*"](Math.pow(1.5, (tree_depth["-"](node_depth)))))["+"](node.radius), node.parent.pos.y["-"](level_hgt["*"](Math.pow(1.5, (tree_depth["-"](node_depth))))), node.pos.z);
             }
-            "376";
+            "390";
             node.radius = Math.pow(1.5, (tree_depth["-"](node_depth)));
-            "378";
+            "392";
             node_label = (await self.get_label(node));
-            "379";
+            "393";
             node_arrow = (await self.get_arrow(node));
-            "381";
+            "395";
             node_label.pos = node.pos;
-            "382";
+            "396";
             node_label.height = max(Math.pow(1.5, (tree_depth["-"](node_depth))), 10);
-            "384";
+            "398";
             node_arrow.pos = node.parent.pos;
-            "385";
+            "399";
             node_arrow.axis = node.pos["-"](node.parent.pos);
-            "387";
+            "401";
         }
         if (last_ele) {
-            "388";
+            "402";
             scene.center = self.root.pos["+"](vector(0, last_ele.pos.y, 0));
         }
     };
@@ -675,23 +701,23 @@ async function __main__() {
     BST.prototype.build_tree = async function build_tree(items) {
         var self = this;
         var ρσ_ls, mid;
-        "391";
+        "405";
         mid = (await Math.floor(len(items)["/"](2)));
-        "392";
+        "406";
         (await self.add_item(items[(typeof mid === "number" && mid["<"](0)) ? items.length["+"](mid) : mid]));
-        "393";
+        "407";
         ρσ_delitem(items, mid);
-        "395";
+        "409";
         if (len(items)[">"](1)) {
-            "396";
+            "410";
             (await self.build_tree(items.slice(0, mid)));
-            "397";
+            "411";
             (await self.build_tree(items.slice(mid, len(items)["+"](1))));
-            "398";
+            "412";
         } else {
-            "399";
+            "413";
             if (ρσ_equals(len(items), 1)) {
-                "400";
+                "414";
                 (await self.add_item(items[0]));
             }
         }
@@ -708,18 +734,18 @@ async function __main__() {
         if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "node")){
             node = ρσ_kwargs_obj.node;
         }
-        "403";
+        "417";
         if ((node === "root" || typeof node === "object" && ρσ_equals(node, "root"))) {
-            "404";
+            "418";
             node = self.root;
-            "405";
+            "419";
         }
         if (node === null) {
-            "406";
+            "420";
             return 0;
-            "407";
+            "421";
         } else {
-            "408";
+            "422";
             return 1["+"](max((await self.get_height(node.left)), (await self.get_height(node.right))));
         }
     };
@@ -731,13 +757,13 @@ async function __main__() {
     });
     BST.prototype.get_depth = async function get_depth(node) {
         var self = this;
-        "411";
+        "425";
         if ((node === self.root || typeof node === "object" && ρσ_equals(node, self.root))) {
-            "412";
+            "426";
             return 0;
-            "413";
+            "427";
         } else {
-            "414";
+            "428";
             return 1["+"]((await self.get_depth(node.parent)));
         }
     };
@@ -748,25 +774,25 @@ async function __main__() {
     BST.prototype.preorderTraverse = async function preorderTraverse(v) {
         var self = this;
         var ρσ_ls, curnode;
-        "417";
+        "431";
         curnode = v;
-        "418";
+        "432";
         curnode.color = color.red;
-        "419";
+        "433";
         ρσ_interpolate_kwargs.call(this, print, (await [curnode.value].concat([ρσ_desugar_kwargs({end: " "})])));
-        "420";
+        "434";
         (await sleep(1));
-        "421";
+        "435";
         if ((curnode.left !== null && (typeof curnode.left !== "object" || ρσ_not_equals(curnode.left, null)))) {
-            "422";
+            "436";
             (await self.preorderTraverse(curnode.left));
-            "423";
+            "437";
         }
         if ((curnode.right !== null && (typeof curnode.right !== "object" || ρσ_not_equals(curnode.right, null)))) {
-            "424";
+            "438";
             (await self.preorderTraverse(curnode.right));
         }
-        "425";
+        "439";
         return;
     };
     if (!BST.prototype.preorderTraverse.__argnames__) Object.defineProperties(BST.prototype.preorderTraverse, {
@@ -776,31 +802,31 @@ async function __main__() {
     BST.prototype.postorderTraverse = async function postorderTraverse(v) {
         var self = this;
         var ρσ_ls, curnode;
-        "428";
+        "442";
         curnode = v;
-        "429";
+        "443";
         curnode.color = color.magenta;
-        "430";
+        "444";
         if ((curnode.left !== null && (typeof curnode.left !== "object" || ρσ_not_equals(curnode.left, null)))) {
-            "431";
+            "445";
             (await sleep(1));
-            "432";
+            "446";
             (await self.postorderTraverse(curnode.left));
-            "433";
+            "447";
         }
         if ((curnode.right !== null && (typeof curnode.right !== "object" || ρσ_not_equals(curnode.right, null)))) {
-            "434";
+            "448";
             (await sleep(1));
-            "435";
+            "449";
             (await self.postorderTraverse(curnode.right));
         }
-        "436";
+        "450";
         (await sleep(1));
-        "437";
+        "451";
         curnode.color = color.red;
-        "438";
+        "452";
         ρσ_interpolate_kwargs.call(this, print, (await [curnode.value].concat([ρσ_desugar_kwargs({end: " "})])));
-        "439";
+        "453";
         return;
     };
     if (!BST.prototype.postorderTraverse.__argnames__) Object.defineProperties(BST.prototype.postorderTraverse, {
@@ -809,29 +835,29 @@ async function __main__() {
     });
     BST.prototype.inorderTraverse = async function inorderTraverse(curnode) {
         var self = this;
-        "443";
+        "457";
         curnode.color = color.magenta;
-        "444";
+        "458";
         if ((curnode.left !== null && (typeof curnode.left !== "object" || ρσ_not_equals(curnode.left, null)))) {
-            "445";
+            "459";
             (await sleep(1));
-            "446";
+            "460";
             (await self.inorderTraverse(curnode.left));
         }
-        "447";
+        "461";
         (await sleep(1));
-        "448";
+        "462";
         curnode.color = color.red;
-        "449";
+        "463";
         ρσ_interpolate_kwargs.call(this, print, (await [curnode.value].concat([ρσ_desugar_kwargs({end: " "})])));
-        "451";
+        "465";
         if ((curnode.right !== null && (typeof curnode.right !== "object" || ρσ_not_equals(curnode.right, null)))) {
-            "452";
+            "466";
             (await sleep(1));
-            "453";
+            "467";
             (await self.inorderTraverse(curnode.right));
         }
-        "454";
+        "468";
         return;
     };
     if (!BST.prototype.inorderTraverse.__argnames__) Object.defineProperties(BST.prototype.inorderTraverse, {
@@ -841,14 +867,14 @@ async function __main__() {
     BST.prototype.get_next_inorder = async function get_next_inorder(node) {
         var self = this;
         var ρσ_ls, curr_node;
-        "457";
+        "471";
         curr_node = node.right;
-        "458";
+        "472";
         while (curr_node.left) {
-            "459";
+            "473";
             curr_node = curr_node.left;
         }
-        "461";
+        "475";
         return curr_node;
     };
     if (!BST.prototype.get_next_inorder.__argnames__) Object.defineProperties(BST.prototype.get_next_inorder, {
@@ -860,12 +886,12 @@ async function __main__() {
         var args = Array.prototype.slice.call(arguments, 0);
         if (arguments[arguments.length["-"](1)] !== null && typeof arguments[arguments.length["-"](1)] === "object" && arguments[arguments.length["-"](1)] [ρσ_kwargs_symbol] === true) args.pop();
         var ρσ_ls, value;
-        "464";
+        "478";
         var ρσ_Iter10 = args;
         ρσ_Iter10 = ((typeof ρσ_Iter10[Symbol.iterator] === "function") ? (ρσ_Iter10 instanceof Map ? ρσ_Iter10.keys() : ρσ_Iter10) : Object.keys(ρσ_Iter10));
         for (var ρσ_Index10 of ρσ_Iter10) {
             value = ρσ_Index10;
-            "465";
+            "479";
             (await self.add_item(value));
         }
     };
@@ -875,7 +901,7 @@ async function __main__() {
     });
     BST.prototype.is_leaf = async function is_leaf(node) {
         var self = this;
-        "468";
+        "482";
         return node.left === null && node.right === null;
     };
     if (!BST.prototype.is_leaf.__argnames__) Object.defineProperties(BST.prototype.is_leaf, {
@@ -884,7 +910,7 @@ async function __main__() {
     });
     BST.prototype.is_left = async function is_left(node) {
         var self = this;
-        "471";
+        "485";
         return node === node.parent.left;
     };
     if (!BST.prototype.is_left.__argnames__) Object.defineProperties(BST.prototype.is_left, {
@@ -893,7 +919,7 @@ async function __main__() {
     });
     BST.prototype.child_count = async function child_count(node) {
         var self = this;
-        "474";
+        "488";
         return (node.left === null) ? 0 : 1["+"]((node.right === null) ? 0 : 1);
     };
     if (!BST.prototype.child_count.__argnames__) Object.defineProperties(BST.prototype.child_count, {
@@ -902,7 +928,7 @@ async function __main__() {
     });
     BST.prototype.get_label = async function get_label(node) {
         var self = this;
-        "477";
+        "491";
         return (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)][0];
     };
     if (!BST.prototype.get_label.__argnames__) Object.defineProperties(BST.prototype.get_label, {
@@ -911,7 +937,7 @@ async function __main__() {
     });
     BST.prototype.get_arrow = async function get_arrow(node) {
         var self = this;
-        "480";
+        "494";
         return (ρσ_expr_temp = self.label_dict)[ρσ_bound_index(node.value, ρσ_expr_temp)][1];
     };
     if (!BST.prototype.get_arrow.__argnames__) Object.defineProperties(BST.prototype.get_arrow, {
@@ -921,12 +947,12 @@ async function __main__() {
     BST.prototype.change_color = async function change_color() {
         var self = this;
         var ρσ_ls, i;
-        "483";
+        "497";
         var ρσ_Iter11 = self.node_list;
         ρσ_Iter11 = ((typeof ρσ_Iter11[Symbol.iterator] === "function") ? (ρσ_Iter11 instanceof Map ? ρσ_Iter11.keys() : ρσ_Iter11) : Object.keys(ρσ_Iter11));
         for (var ρσ_Index11 of ρσ_Iter11) {
             i = ρσ_Index11;
-            "484";
+            "498";
             i.color = color.cyan;
         }
     };
@@ -935,7 +961,7 @@ async function __main__() {
     });
     BST.prototype.get_value = async function get_value(node) {
         var self = this;
-        "487";
+        "501";
         return node.value;
     };
     if (!BST.prototype.get_value.__argnames__) Object.defineProperties(BST.prototype.get_value, {
@@ -971,16 +997,16 @@ async function __main__() {
     
     
 
-    "490";
+    "504";
     inp_str = "";
-    "491";
+    "505";
     win = null;
-    "493";
+    "507";
     async function bind_fn(obj) {
-        "494";
-        "495";
+        "508";
+        "509";
         inp_str = obj.text;
-        "496";
+        "510";
         win.remove();
     };
     if (!bind_fn.__argnames__) Object.defineProperties(bind_fn, {
@@ -988,7 +1014,7 @@ async function __main__() {
         __module__ : {value: null}
     });
 
-    "499";
+    "513";
     async function get_input() {
         var prompt_text = (arguments[0] === undefined || ( 0 === arguments.length["-"](1) && arguments[arguments.length["-"](1)] !== null && typeof arguments[arguments.length["-"](1)] === "object" && arguments[arguments.length["-"](1)] [ρσ_kwargs_symbol] === true)) ? get_input.__defaults__.prompt_text : arguments[0];
         var ρσ_kwargs_obj = arguments[arguments.length["-"](1)];
@@ -996,11 +1022,11 @@ async function __main__() {
         if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "prompt_text")){
             prompt_text = ρσ_kwargs_obj.prompt_text;
         }
-        "500";
-        "501";
+        "514";
+        "515";
         inp_str = "";
         (await sleep(.1));
-        "502";
+        "516";
         win = ρσ_interpolate_kwargs.call(this, winput, [ρσ_desugar_kwargs({prompt: prompt_text, type: "string", bind: bind_fn})]);
     };
     if (!get_input.__defaults__) Object.defineProperties(get_input, {
@@ -1010,12 +1036,12 @@ async function __main__() {
         __module__ : {value: null}
     });
 
-    "505";
+    "519";
     async function wait_for_input() {
-        "506";
-        "507";
+        "520";
+        "521";
         while ((inp_str === "" || typeof inp_str === "object" && ρσ_equals(inp_str, ""))) {
-            "508";
+            "522";
             (await rate(100));
         }
     };
@@ -1023,68 +1049,40 @@ async function __main__() {
         __module__ : {value: null}
     });
 
-    "511";
+    "525";
     async function main() {
         var ρσ_ls, _GS_1, bst, arr, inputs, w, val, node, node_list_vals;
-        "512";
-        "513";
+        "526";
+        "527";
         _GS_1 = new BST;
         (await _GS_1.__init__());
         bst = _GS_1;
-        "515";
+        "529";
         (await get_input("Enter elements to build a Binary Search tree: "));
-        "516";
+        "530";
         (await wait_for_input());
-        "518";
+        "532";
         arr = list((await set((await map(int, (await inp_str.split(" ")))))));
-        "519";
+        "533";
         (await arr.pysort());
-        "520";
+        "534";
         (await bst.build_tree(arr));
-        "522";
+        "536";
         while (true) {
-            "523";
+            "537";
             (await get_input("Enter operation: "));
-            "524";
+            "538";
             (await wait_for_input());
-            "526";
+            "540";
             inputs = (await inp_str.split(" "));
-            "527";
+            "541";
             if ((inputs[0] === "inord" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "inord"))) {
-                "528";
-                w = ρσ_interpolate_kwargs.call(this, wtext, [ρσ_desugar_kwargs({text: "<h1>Inorder Traversal<\/h1>", pos: scene.title_anchor})]);
-                "529";
-                print("Inorder Traversal :");
-                "530";
-                (await bst.inorderTraverse(bst.root));
-                "531";
-                (await bst.change_color());
-                "532";
-                print();
-                "533";
-                w.remove();
-                "534";
-            } else if ((inputs[0] === "preord" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "preord"))) {
-                "535";
-                w = ρσ_interpolate_kwargs.call(this, wtext, [ρσ_desugar_kwargs({text: "<h1>Preorder Traversal</h1>", pos: scene.title_anchor})]);
-                "536";
-                print("Preorder Traversal :");
-                "537";
-                (await bst.preorderTraverse(bst.root));
-                "538";
-                (await bst.change_color());
-                "539";
-                print();
-                "540";
-                w.remove();
-                "541";
-            } else if ((inputs[0] === "postord" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "postord"))) {
                 "542";
-                w = ρσ_interpolate_kwargs.call(this, wtext, [ρσ_desugar_kwargs({text: "<h1>Postorder Traversal</h1>", pos: scene.title_anchor})]);
+                w = ρσ_interpolate_kwargs.call(this, wtext, [ρσ_desugar_kwargs({text: "<h1>Inorder Traversal<\/h1>", pos: scene.title_anchor})]);
                 "543";
-                print("Postorder Traversal :");
+                print("Inorder Traversal :");
                 "544";
-                (await bst.postorderTraverse(bst.root));
+                (await bst.inorderTraverse(bst.root));
                 "545";
                 (await bst.change_color());
                 "546";
@@ -1092,31 +1090,59 @@ async function __main__() {
                 "547";
                 w.remove();
                 "548";
-            } else if ((inputs[0] === "S" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "S"))) {
+            } else if ((inputs[0] === "preord" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "preord"))) {
                 "549";
-                w = ρσ_interpolate_kwargs.call(this, wtext, [ρσ_desugar_kwargs({text: "<h1>Search</h1>", pos: scene.title_anchor})]);
+                w = ρσ_interpolate_kwargs.call(this, wtext, [ρσ_desugar_kwargs({text: "<h1>Preorder Traversal</h1>", pos: scene.title_anchor})]);
                 "550";
-                val = int(inputs[1]);
+                print("Preorder Traversal :");
                 "551";
-                node = (await bst.search_item(bst.root, val));
+                (await bst.preorderTraverse(bst.root));
                 "552";
+                (await bst.change_color());
+                "553";
+                print();
+                "554";
+                w.remove();
+                "555";
+            } else if ((inputs[0] === "postord" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "postord"))) {
+                "556";
+                w = ρσ_interpolate_kwargs.call(this, wtext, [ρσ_desugar_kwargs({text: "<h1>Postorder Traversal</h1>", pos: scene.title_anchor})]);
+                "557";
+                print("Postorder Traversal :");
+                "558";
+                (await bst.postorderTraverse(bst.root));
+                "559";
+                (await bst.change_color());
+                "560";
+                print();
+                "561";
+                w.remove();
+                "562";
+            } else if ((inputs[0] === "S" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "S"))) {
+                "563";
+                w = ρσ_interpolate_kwargs.call(this, wtext, [ρσ_desugar_kwargs({text: "<h1>Search</h1>", pos: scene.title_anchor})]);
+                "564";
+                val = int(inputs[1]);
+                "565";
+                node = (await bst.search_item(bst.root, val));
+                "566";
                 if (node === null) {
-                    "553";
+                    "567";
                     print(""["+"](ρσ_str.format("{}", val))["+"](" is not present"));
-                    "554";
+                    "568";
                 } else {
-                    "555";
+                    "569";
                     print(""["+"](ρσ_str.format("{}", node.value))["+"](" found!!"));
                 }
-                "556";
+                "570";
                 w.remove();
-                "557";
+                "571";
             } else if ((inputs[0] === "I" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "I"))) {
-                "558";
+                "572";
                 w = ρσ_interpolate_kwargs.call(this, wtext, [ρσ_desugar_kwargs({text: "<h1>Insertion</h1>", pos: scene.title_anchor})]);
-                "559";
+                "573";
                 val = int(inputs[1]);
-                "560";
+                "574";
                 node_list_vals = (function() {
                     var ρσ_Iter = bst.node_list, ρσ_Result = [], node;
                     ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
@@ -1127,60 +1153,60 @@ async function __main__() {
                     ρσ_Result = ρσ_list_constructor(ρσ_Result);
                     return ρσ_Result;
                 })();
-                "561";
+                "575";
                 while (ρσ_in(val, node_list_vals)) {
-                    "562";
+                    "576";
                     (await get_input("Enter a value not present in the tree: "));
-                    "563";
+                    "577";
                     (await wait_for_input());
-                    "564";
+                    "578";
                     val = int(inp_str);
                 }
-                "565";
+                "579";
                 (await bst.search_item(bst.root, val));
-                "566";
+                "580";
                 (await bst.add_item(val));
-                "567";
+                "581";
                 print();
-                "568";
+                "582";
                 w.remove();
-                "569";
+                "583";
             } else if ((inputs[0] === "D" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "D"))) {
-                "570";
+                "584";
                 w = ρσ_interpolate_kwargs.call(this, wtext, [ρσ_desugar_kwargs({text: "<h1>Deletion</h1>", pos: scene.title_anchor})]);
-                "571";
+                "585";
                 val = int(inputs[1]);
-                "572";
+                "586";
                 node = (await bst.remove_item(val));
-                "573";
+                "587";
                 if (node === null) {
-                    "574";
+                    "588";
                     print(""["+"](ρσ_str.format("{}", val))["+"](" is not present"));
-                    "575";
+                    "589";
                 } else {
-                    "576";
+                    "590";
                     print(""["+"](ρσ_str.format("{}", val))["+"](" deleted"));
                 }
-                "577";
+                "591";
                 print();
-                "578";
+                "592";
                 w.remove();
-                "580";
+                "594";
             } else if ((inputs[0] === "X" || typeof inputs[0] === "object" && ρσ_equals(inputs[0], "X"))) {
-                "581";
+                "595";
                 break;
             }
         }
-        "583";
+        "597";
         print("Program Terminated");
-        "587";
+        "601";
     };
     if (!main.__module__) Object.defineProperties(main, {
         __module__ : {value: null}
     });
 
     if ((__name__ === "__main__" || typeof __name__ === "object" && ρσ_equals(__name__, "__main__"))) {
-        "588";
+        "602";
         (await main());
     }
 };

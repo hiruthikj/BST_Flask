@@ -19,7 +19,7 @@ class BST:
         scene.autoscale = True
 
         scene.width = 1280
-        scene.height = 620
+        scene.height = 500
 
         print("BST initialted")
 
@@ -206,17 +206,32 @@ class BST:
                 self.label_dict[node.value][0].pos = node.pos
                 t += dt
 
+            # print(node)
+            # print(dir(node))
+            if node is self.root:
+                label_ = self.get_label(node)
+                label_.visible = False
+                del self.label_dict[node.value]
+
+                child_ = node.left if node.right is None else node.left
+                arr_ = self.get_arrow(child_)
+                arr_.visible = False
+
+                self.root.parent = None
+                self.root = child_
+
+                to_return = node
+                node.visible = False
+                del node
+
+                self.refactor2()
+                return to_return
+            
             self.label_dict[node.value][0].visible = False
             self.label_dict[node.value][1].visible = False
             node.visible = False
 
-            if node is self.root:
-                self.root = node.left if node.right is None else node.left
-                self.root.parent = None
-
-                to_return = node
-                del node
-                return to_return
+            
 
             if self.is_left(node):
                 if node.right is None:
@@ -284,15 +299,14 @@ class BST:
             if self.node_list[i] != self.search_item(self.root, self.node_list[i].value, False):
                 to_remove.append(self.node_list[i].value)
 
-        # print(self.node_list)
-        # print([node.value for node in self.node_list])
-
         for (i, node) in enumerate(self.node_list):
             temp_node = self.node_list[i]
             # print("dir: ", dir(temp_node))
             if temp_node.value in to_remove:
-                self.node_list.pop(i)
-            
+                try:
+                    self.node_list = self.node_list[:i] + self.node_list[i+1:]
+                except:
+                    self.node_list.pop(i)
 
         n = len(self.node_list)
         
