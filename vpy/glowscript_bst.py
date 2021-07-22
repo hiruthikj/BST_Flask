@@ -340,66 +340,66 @@ class BST:
             
 
 
-    def refactor(self, level_breadth="default", level_hgt="default"):
-        if self.root is None:
-            return
+    # def refactor(self, level_breadth="default", level_hgt="default"):
+    #     if self.root is None:
+    #         return
 
-        if level_breadth == "default":
-            level_breadth = self.level_breadth
+    #     if level_breadth == "default":
+    #         level_breadth = self.level_breadth
 
-        if level_hgt == "default":
-            level_hgt = self.level_hgt
+    #     if level_hgt == "default":
+    #         level_hgt = self.level_hgt
 
-        tree_depth = self.get_height(self.root)
+    #     tree_depth = self.get_height(self.root)
 
-        queue = []
-        queue.append(self.root)
-        last_ele = None
+    #     queue = []
+    #     queue.append(self.root)
+    #     last_ele = None
 
-        while len(queue) > 0:
-            node = queue.pop()
-            last_ele = node
-            if node.left:
-                queue.append(node.left)
-            if node.right:
-                queue.append(node.right)
+    #     while len(queue) > 0:
+    #         node = queue.pop()
+    #         last_ele = node
+    #         if node.left:
+    #             queue.append(node.left)
+    #         if node.right:
+    #             queue.append(node.right)
 
-            if node is self.root:
-                node.radius = 1.5 ** (tree_depth)
-                node_label = self.get_label(node)
-                node_label.height = max(1.5 ** (tree_depth), 10)
-                continue  # no need to move root node position
+    #         if node is self.root:
+    #             node.radius = 1.5 ** (tree_depth)
+    #             node_label = self.get_label(node)
+    #             node_label.height = max(1.5 ** (tree_depth), 10)
+    #             continue  # no need to move root node position
 
-            node_depth = self.get_depth(node)
-            if self.is_left(node):
-                node.pos = vector(
-                    node.parent.pos.x
-                    - level_breadth * 1.5 ** (tree_depth - node_depth)
-                    - node.radius,
-                    node.parent.pos.y - level_hgt * 1.5 ** (tree_depth - node_depth),
-                    node.pos.z
-                )
-            else:
-                node.pos = vector(
-                    node.parent.pos.x
-                    + level_breadth * 1.5 ** (tree_depth - node_depth)
-                    + node.radius,
-                    node.parent.pos.y - level_hgt * 1.5 ** (tree_depth - node_depth),
-                    node.pos.z
-                )
-            node.radius = 1.5 ** (tree_depth - node_depth)
+    #         node_depth = self.get_depth(node)
+    #         if self.is_left(node):
+    #             node.pos = vector(
+    #                 node.parent.pos.x
+    #                 - level_breadth * 1.5 ** (tree_depth - node_depth)
+    #                 - node.radius,
+    #                 node.parent.pos.y - level_hgt * 1.5 ** (tree_depth - node_depth),
+    #                 node.pos.z
+    #             )
+    #         else:
+    #             node.pos = vector(
+    #                 node.parent.pos.x
+    #                 + level_breadth * 1.5 ** (tree_depth - node_depth)
+    #                 + node.radius,
+    #                 node.parent.pos.y - level_hgt * 1.5 ** (tree_depth - node_depth),
+    #                 node.pos.z
+    #             )
+    #         node.radius = 1.5 ** (tree_depth - node_depth)
 
-            node_label = self.get_label(node)
-            node_arrow = self.get_arrow(node)
+    #         node_label = self.get_label(node)
+    #         node_arrow = self.get_arrow(node)
 
-            node_label.pos = node.pos
-            node_label.height = max(1.5 ** (tree_depth - node_depth), 10)
+    #         node_label.pos = node.pos
+    #         node_label.height = max(1.5 ** (tree_depth - node_depth), 10)
 
-            node_arrow.pos = node.parent.pos
-            node_arrow.axis = node.pos - node.parent.pos
+    #         node_arrow.pos = node.parent.pos
+    #         node_arrow.axis = node.pos - node.parent.pos
 
-        if last_ele:
-            scene.center = self.root.pos + vector(0, last_ele.pos.y, 0)
+    #     if last_ele:
+    #         scene.center = self.root.pos + vector(0, last_ele.pos.y, 0)
 
     def build_tree(self, items):
         mid = len(items) // 2
